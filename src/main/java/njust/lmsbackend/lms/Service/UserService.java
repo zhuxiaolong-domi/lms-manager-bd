@@ -47,7 +47,7 @@ public class UserService {
      *
      * @param userPOJO 用户对象
      */
-    public void addOrUpdate(UserPOJO userPOJO) {
+    public void addOrUpdateUsers(UserPOJO userPOJO) {
         userDAO.save(userPOJO);
     }
 
@@ -64,11 +64,17 @@ public class UserService {
      * 根据实验号选择实验
      * TODO:现在先不做验证,暂时使用前端验证
      * @param exp_id 实验 id
-     * @param student_id 学生 id
+     * @param studentId 学生 id
      */
-    public void selectExpById(String exp_id, String student_id)
+    public void selectExpById(String exp_id, String studentId)
     {
-        ParticipitionPOJO selectParticipitionPOJO = new ParticipitionPOJO(exp_id, student_id);
+        ParticipitionPOJO selectParticipitionPOJO = new ParticipitionPOJO(exp_id, studentId);
         participitionDAO.save(selectParticipitionPOJO);
+    }
+
+    public void withDrawById(String exp_id, String studentId)
+    {
+        //ParticipitionPOJO withDrawParticipitionPOJO = new ParticipitionPOJO(exp_id, studentId);
+        participitionDAO.deleteByExpIdAndStudentId(exp_id, studentId);
     }
 }

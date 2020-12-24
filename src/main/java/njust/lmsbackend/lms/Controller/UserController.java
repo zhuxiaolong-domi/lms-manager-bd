@@ -30,18 +30,23 @@ public class UserController {
         return ResultFactory.buildSuccessResult("查询用户成功", userService.listAllUsers());
     }
 
+    /**
+     * 添加或更新用户
+     * @param userPOJO 用户对象
+     * @return 成功
+     */
     @CrossOrigin
     @PostMapping("/api/admin/user/add")
-    public Result addOrUpdate(@RequestBody UserPOJO userPOJO)
+    public Result addOrUpdateUsers(@RequestBody UserPOJO userPOJO)
     {
-        userService.addOrUpdate(userPOJO);
+        userService.addOrUpdateUsers(userPOJO);
         return ResultFactory.buildSuccessResult_p("修改成功", null);
     }
 
     /**
      * 根据id删除id操作
      *
-     * @param userPOJO 书籍对象
+     * @param userPOJO 用户对象
      * @throws Exception 异常
      */
     @CrossOrigin
@@ -63,12 +68,25 @@ public class UserController {
     }
 
 
+    /**
+     * 选择实验
+     * @param participitionExpPOJO 参与表-实验表 间接类
+     * @return 选择成功
+     */
     @CrossOrigin
     @PostMapping("/api/user/selectExp")
     public Result selectExp(@RequestBody ParticipitionExpPOJO participitionExpPOJO)
     {
         userService.selectExpById(participitionExpPOJO.experimentPOJO.getId(), participitionExpPOJO.userPOJO.getId());
         return ResultFactory.buildSuccessResult_p("选择实验成功", null);
+    }
+
+    @CrossOrigin
+    @PostMapping("/api/user/withdrawExp")
+    public Result withDrawExp(@RequestBody ParticipitionExpPOJO participitionExpPOJO)
+    {
+        userService.withDrawById(participitionExpPOJO.experimentPOJO.getId(), participitionExpPOJO.userPOJO.getId());
+        return ResultFactory.buildSuccessResult_p("退选实验成功", null);
     }
 
 

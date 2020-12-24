@@ -13,41 +13,42 @@ import javax.persistence.Table;
 public class ParticipitionPOJO {
     @Id
     @Column(name = "student_id")
-    String student_id;
+    String studentId;
 
-    private String exp_id;
+    @Column(name = "exp_id")
+    private String expId;
     private int score;
     private String report;
 
     public ParticipitionPOJO() {
     }
 
-    public ParticipitionPOJO(String exp_id, String student_id) {
-        this.student_id = student_id;
-        this.exp_id = exp_id;
+    public ParticipitionPOJO(String expId, String studentId) {
+        this.studentId = studentId;
+        this.expId = expId;
     }
 
-    public ParticipitionPOJO(String student_id, String exp_id, int score, String report) {
-        this.student_id = student_id;
-        this.exp_id = exp_id;
+    public ParticipitionPOJO(String studentId, String expId, int score, String report) {
+        this.studentId = studentId;
+        this.expId = expId;
         this.score = score;
         this.report = report;
     }
 
-    public String getStudent_id() {
-        return student_id;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setStudent_id(String student_id) {
-        this.student_id = student_id;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
     public String getExp_id() {
-        return exp_id;
+        return expId;
     }
 
-    public void setExp_id(String exp_id) {
-        this.exp_id = exp_id;
+    public void setExp_id(String expId) {
+        this.expId = expId;
     }
 
     public int getScore() {
