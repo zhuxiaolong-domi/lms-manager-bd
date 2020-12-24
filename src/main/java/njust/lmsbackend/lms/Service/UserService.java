@@ -77,4 +77,9 @@ public class UserService {
         //ParticipitionPOJO withDrawParticipitionPOJO = new ParticipitionPOJO(exp_id, studentId);
         participitionDAO.deleteByExpIdAndStudentId(exp_id, studentId);
     }
+
+    public List<ParticipitionPOJO> queryAllScoreById(String studentId)
+    {
+        return participitionDAO.findAllByStudentId(studentId);
+    }
 }
