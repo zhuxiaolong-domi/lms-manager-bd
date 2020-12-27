@@ -31,7 +31,7 @@ public class ComputerLabService {
      *
      * @param id 实验室的id
      */
-    public void deleteById(String id) {
+    public void deleteById(int id) {
         computerlabDAO.deleteById(id);
     }
 }
