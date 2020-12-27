@@ -12,7 +12,7 @@ public class ComputerLabService {
     ComputerLabDAO computerlabDAO;
     /**
      * 返回所有的实验室 根据id
-     * @return 实验室列表
+     * @return 实验室
      */
     public List<ComputerLabPOJO> listAllLabs()
     {
