@@ -22,8 +22,8 @@ public class ComputerLabPOJO {
         this.capacity = capacity;
     }
 
-    public int getId() {
-        return id;
+    public String getId() {
+        return String.valueOf(id);
     }
 
     public void setId(int id) {
