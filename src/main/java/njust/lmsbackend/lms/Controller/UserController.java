@@ -1,7 +1,6 @@
 package njust.lmsbackend.lms.Controller;
 
-import njust.lmsbackend.lms.POJO.ExperimentPOJO;
-import njust.lmsbackend.lms.POJO.ParticipitionExpPOJO;
+import njust.lmsbackend.lms.POJO.ParticipationExpPOJO;
 import njust.lmsbackend.lms.POJO.UserPOJO;
 import njust.lmsbackend.lms.Result.Result;
 import njust.lmsbackend.lms.Result.ResultFactory;
@@ -79,25 +78,25 @@ public class UserController {
     /**
      * 选择实验
      *
-     * @param participitionExpPOJO 参与表-实验表 间接类
+     * @param participationExpPOJO 参与表-实验表 间接类
      * @return 选择成功
      */
     @CrossOrigin
     @PostMapping("/api/user/selectExp")
-    public Result selectExp(@RequestBody ParticipitionExpPOJO participitionExpPOJO) {
-        userService.selectExpById(participitionExpPOJO.experimentPOJO.getId(), participitionExpPOJO.userPOJO.getId());
+    public Result selectExp(@RequestBody ParticipationExpPOJO participationExpPOJO) {
+        userService.selectExpById(participationExpPOJO.experimentPOJO.getId(), participationExpPOJO.userPOJO.getId());
         return ResultFactory.buildSuccessResult_p("选择实验成功", null);
     }
 
     /**
      * 退选实验
-     * @param participitionExpPOJO 参与和实验的中间类
+     * @param participationExpPOJO 参与和实验的中间类
      * @return 退选实验成功
      */
     @CrossOrigin
     @PostMapping("/api/user/withdrawExp")
-    public Result withDrawExp(@RequestBody ParticipitionExpPOJO participitionExpPOJO) {
-        userService.withDrawById(participitionExpPOJO.experimentPOJO.getId(), participitionExpPOJO.userPOJO.getId());
+    public Result withDrawExp(@RequestBody ParticipationExpPOJO participationExpPOJO) {
+        userService.withDrawById(participationExpPOJO.experimentPOJO.getId(), participationExpPOJO.userPOJO.getId());
         return ResultFactory.buildSuccessResult_p("退选实验成功", null);
     }
 

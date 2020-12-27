@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -85,5 +87,31 @@ public class ExperimentService {
             return teacher.get();
         }
         return null;
+    }
+
+    /*查询学生信息*/
+    public List<UserPOJO> findAllStudentSelected(String expId){
+        List<UserPOJO> students = new LinkedList<>();
+        for(var participation : participationDAO.findAllByExpId(expId)){
+            students.add(userDAO.findUserPOJOById(participation.getStudentId()));
+        }
+        return students;
+    }
+
+    /*下载实验报告*/
+    public String downloadReport(String studentId, String expId){
+        return participationDAO.findParticipationPOJOByStudentIdAndExpId(studentId,expId).getReport();
+    }
+
+    /*录入成绩以及修改成绩*/
+    public boolean enterScore(String studentId, String expId, Integer score){
+        if(!experimentDAO.existsById(expId)){
+            return false;
+        }
+        if(!userDAO.existsById(studentId)){
+            return false;
+        }
+        int res = participationDAO.updateScore(score,studentId,expId);
+        return res > 0;
     }
 }
