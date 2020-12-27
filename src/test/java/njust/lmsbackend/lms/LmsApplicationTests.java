@@ -35,12 +35,13 @@ class LmsApplicationTests {
 
     @Test
     void testExpSave(){
-        ExperimentPOJO experimentPOJO = new ExperimentPOJO();
+        /*ExperimentPOJO experimentPOJO = new ExperimentPOJO();
         experimentPOJO.setId(UUID.randomUUID().toString().replaceAll("-",""));
         experimentPOJO.setName("test1");
         experimentPOJO.setDescription("test");
 
-        experimentDAO.save(experimentPOJO);
+        experimentDAO.save(experimentPOJO);*/
+        System.out.println(new Date());
     }
 
 

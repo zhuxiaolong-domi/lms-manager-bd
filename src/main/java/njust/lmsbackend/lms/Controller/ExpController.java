@@ -16,14 +16,28 @@ public class ExpController {
     /*接收创建实验的请求*/
     @RequestMapping("/create")
     public String createExp(String teacherId, ExperimentPOJO experiment){
-        service.startExp(teacherId,experiment);
+        service.startExperiment(teacherId,experiment);
         return "OK, create success";
     }
 
     /*测试根据实验编号查找老师*/
     @RequestMapping("/findTeacher")
     public String findTeacher(String expId){
-        System.out.println("yes");
         return service.findTeacherByExp(expId).toString();
+    }
+
+    /*测试修改已发布实验*/
+    @RequestMapping("/updateExp")
+    public String updateExp(String teacherId, ExperimentPOJO experiment){
+        if(service.updateExperiment(experiment,teacherId)){
+            return "ok, update success";
+        }
+        return "no, update failed";
+    }
+
+    /*测试删除已发布实验*/
+    @RequestMapping("/deleteExp")
+    public String deleteExp(String expId){
+        return (service.deleteExperiment(expId) == true)? "ok, delete success":"no, delete failed";
     }
 }

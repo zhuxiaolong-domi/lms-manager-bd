@@ -35,6 +35,6 @@ public class ExperimentPOJO {
     private String description;
 
     @Column(name = "max")
-    private Integer max;
+    private int max;
 
 }

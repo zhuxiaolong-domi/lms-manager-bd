@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StartExpDAO extends JpaRepository<StartExpPOJO, String> {
     StartExpPOJO findStartExpPOJOByExpId(String expId);
+
+    StartExpPOJO findStartExpPOJOByExpIdAndTeacherId(String expId, String teacherId);
 }

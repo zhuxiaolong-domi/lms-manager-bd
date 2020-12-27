@@ -1,9 +1,11 @@
 package njust.lmsbackend.lms.Service;
 
 import njust.lmsbackend.lms.DAO.ExperimentDAO;
+import njust.lmsbackend.lms.DAO.ParticipationDAO;
 import njust.lmsbackend.lms.DAO.StartExpDAO;
 import njust.lmsbackend.lms.DAO.UserDAO;
 import njust.lmsbackend.lms.POJO.ExperimentPOJO;
+import njust.lmsbackend.lms.POJO.ParticipationPOJO;
 import njust.lmsbackend.lms.POJO.StartExpPOJO;
 import njust.lmsbackend.lms.POJO.UserPOJO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,20 +26,48 @@ public class ExperimentService {
 
     @Autowired
     private StartExpDAO startExpDAO;
-    /*老师添加一个实验*/
-    public void startExp(String teacherId, ExperimentPOJO experiment){
+
+    @Autowired
+    private ParticipationDAO participationDAO;
+
+
+    /*实验发布管理*/
+    /*1.老师添加一个实验*/
+    public boolean startExperiment(String teacherId, ExperimentPOJO experiment){
         /*如果老师不存在直接返回*/
         if(userDAO.findById(teacherId) == null){
-            return;
+            return false;
         }
         experiment.setId(UUID.randomUUID().toString().replaceAll("-",""));
-        System.out.println(experiment);
         experimentDAO.save(experiment);
         StartExpPOJO startExp = new StartExpPOJO();
         startExp.setExpId(experiment.getId());
         startExp.setTeacherId(teacherId);
         startExpDAO.save(startExp);
+        return true;
     }
+
+    /*2.老师修改已发布的实验*/
+    public boolean updateExperiment(ExperimentPOJO experiment, String teacherId){
+        StartExpPOJO startExp = startExpDAO.findStartExpPOJOByExpIdAndTeacherId(experiment.getId(), teacherId);
+        if(startExp == null){
+            return false;
+        }
+        experimentDAO.save(experiment);
+        return true;
+    }
+
+    /*3.删除已发布实验*/
+    public boolean deleteExperiment(String expId){
+        if(!experimentDAO.existsById(expId)){
+            return false;
+        }
+        startExpDAO.deleteById(expId);
+        participationDAO.deleteParticipationPOJOByExpId(expId);
+        experimentDAO.deleteById(expId);
+        return true;
+    }
+
 
     /*根据实验查找创建的老师*/
     public UserPOJO findTeacherByExp(String expId){
@@ -56,4 +86,6 @@ public class ExperimentService {
         }
         return null;
     }
+
+
 }

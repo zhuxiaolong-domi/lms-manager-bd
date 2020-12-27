@@ -30,6 +30,6 @@ public class UserPOJO implements Serializable{
     private String pwd;
 
     @Column(name = "identity")
-    private Integer identity;
+    private int identity;
 
 }
