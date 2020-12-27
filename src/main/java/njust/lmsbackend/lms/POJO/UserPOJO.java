@@ -1,35 +1,62 @@
 package njust.lmsbackend.lms.POJO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "tb_user")
-@Component
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-public class UserPOJO implements Serializable{
+@JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
+public class UserPOJO {
     @Id
     @Column(name = "id")
-    private String id;
+    String id;
 
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "pwd")
     private String pwd;
-
+    //0->学生 1->老师 2->管理员
     @Column(name = "identity")
     private int identity;
 
+    public UserPOJO() {
+    }
+
+    public UserPOJO(String id, String name, String pwd, int identity) {
+        this.id = id;
+        this.name = name;
+        this.pwd = pwd;
+        this.identity = identity;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public int getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(int identity) {
+        this.identity = identity;
+    }
 }

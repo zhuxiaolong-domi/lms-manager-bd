@@ -1,40 +1,84 @@
 package njust.lmsbackend.lms.POJO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "tb_experiment")
-@Component
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+@JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 public class ExperimentPOJO {
     @Id
-    @Column(name = "id", length = 32)
-    private String id;
+    @Column(name = "id")
+    String id;
 
     @Column(name = "name")
-    private String name;
+    String name;
 
-    @Column(name = "start")
     private Date start;
-
-    @Column(name = "end")
     private Date end;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "max")
     private int max;
 
+
+    public ExperimentPOJO() {
+    }
+
+    public ExperimentPOJO(String id, String name, Date start, Date end, String description, int max) {
+        this.id = id;
+        this.name = name;
+        this.start = start;
+        this.end = end;
+        this.description = description;
+        this.max = max;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
 }

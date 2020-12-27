@@ -1,33 +1,31 @@
 package njust.lmsbackend.lms.POJO;
 
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_participation")
-@Component
+@JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 public class ParticipationPOJO {
-
     @Id
-    @Column(name = "student_id", length = 12)
-    private String studentId;
+    @Column(name = "student_id")
+    String studentId;
 
-    @Column(name = "exp_id", length = 32)
-    private String expId;
-
-    @Column(name = "score")
+    @Column(name = "exp_id")
+    String expId;
     private int score;
+    private String report;
 
-    @Column(name = "report")
-    private  String report;
+    public ParticipationPOJO() {
+    }
 
-    public ParticipationPOJO(){}
+    public ParticipationPOJO(String expId, String studentId) {
+        this.studentId = studentId;
+        this.expId = expId;
+    }
 
-    public ParticipationPOJO(String studentId, String expId, Integer score, String report) {
+    public ParticipationPOJO(String studentId, String expId, int score, String report) {
         this.studentId = studentId;
         this.expId = expId;
         this.score = score;
@@ -42,19 +40,19 @@ public class ParticipationPOJO {
         this.studentId = studentId;
     }
 
-    public String getExpId() {
+    public String getExp_id() {
         return expId;
     }
 
-    public void setExpId(String expId) {
+    public void setExp_id(String expId) {
         this.expId = expId;
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
