@@ -1,5 +1,4 @@
 package njust.lmsbackend.lms.Controller;
-import njust.lmsbackend.lms.POJO.ComputerLabPOJO;
 import njust.lmsbackend.lms.POJO.UserPOJO;
 import njust.lmsbackend.lms.Result.Result;
 import njust.lmsbackend.lms.Result.ResultFactory;

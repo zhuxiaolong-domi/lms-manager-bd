@@ -1,7 +1,6 @@
 package njust.lmsbackend.lms.Service;
 
 import njust.lmsbackend.lms.DAO.UserDAO;
-import njust.lmsbackend.lms.POJO.ComputerLabPOJO;
 import njust.lmsbackend.lms.POJO.UserPOJO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
