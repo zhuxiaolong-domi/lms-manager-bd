@@ -1,4 +1,5 @@
 package njust.lmsbackend.lms.Result;
+
 import lombok.Data;
 
 @Data

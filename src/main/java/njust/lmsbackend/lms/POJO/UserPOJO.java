@@ -1,4 +1,5 @@
 package njust.lmsbackend.lms.POJO;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -8,13 +9,13 @@ import javax.persistence.*;
 @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 public class UserPOJO {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     String id;
 
     private String name;
     private String pwd;
     //0->学生 1->老师 2->管理员
+    @Column(name = "identity")
     private int identity;
 
     public UserPOJO() {
