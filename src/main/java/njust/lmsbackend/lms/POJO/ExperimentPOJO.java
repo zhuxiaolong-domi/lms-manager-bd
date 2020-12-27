@@ -2,10 +2,7 @@ package njust.lmsbackend.lms.POJO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -16,11 +13,14 @@ public class ExperimentPOJO {
     @Column(name = "id")
     String id;
 
-    private String name;
+    @Column(name = "name")
+    String name;
+
     private Date start;
     private Date end;
     private String description;
     private int max;
+
 
     public ExperimentPOJO() {
     }

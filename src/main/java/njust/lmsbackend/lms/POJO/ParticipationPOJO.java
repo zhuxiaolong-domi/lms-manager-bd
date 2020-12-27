@@ -2,33 +2,30 @@ package njust.lmsbackend.lms.POJO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_participation")
 @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
-public class ParticipitionPOJO {
+public class ParticipationPOJO {
     @Id
     @Column(name = "student_id")
     String studentId;
 
     @Column(name = "exp_id")
-    private String expId;
+    String expId;
     private int score;
     private String report;
 
-    public ParticipitionPOJO() {
+    public ParticipationPOJO() {
     }
 
-    public ParticipitionPOJO(String expId, String studentId) {
+    public ParticipationPOJO(String expId, String studentId) {
         this.studentId = studentId;
         this.expId = expId;
     }
 
-    public ParticipitionPOJO(String studentId, String expId, int score, String report) {
+    public ParticipationPOJO(String studentId, String expId, int score, String report) {
         this.studentId = studentId;
         this.expId = expId;
         this.score = score;
