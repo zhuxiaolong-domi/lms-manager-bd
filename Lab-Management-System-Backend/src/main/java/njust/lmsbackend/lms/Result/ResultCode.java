@@ -1,6 +1,6 @@
 package njust.lmsbackend.lms.Result;
 
-public class ResultCode {
+public enum ResultCode {
     SUCCESS(0),
     FAIL(400),
     UNAUTHORIZED(401),
