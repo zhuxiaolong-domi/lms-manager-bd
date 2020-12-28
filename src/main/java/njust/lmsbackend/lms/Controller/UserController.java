@@ -58,8 +58,8 @@ public class UserController {
      * @throws Exception 异常
      */
     @CrossOrigin
-    @PostMapping("/api/admin/user/delete")
-    public Result delete(@RequestBody UserPOJO userPOJO) throws Exception {
+    @PostMapping("/api/admin/user/deleteUser")
+    public Result deleteUser(@RequestBody UserPOJO userPOJO) throws Exception {
         userService.deleteById(userPOJO.getId());
         return ResultFactory.buildSuccessResult_p("删除成功", null);
     }
@@ -91,6 +91,7 @@ public class UserController {
 
     /**
      * 退选实验
+     *
      * @param participitionExpPOJO 参与和实验的中间类
      * @return 退选实验成功
      */
@@ -103,6 +104,7 @@ public class UserController {
 
     /**
      * 根据学号查询成绩
+     *
      * @param userPOJO 学生对象
      * @return 学生的所有成绩
      */
@@ -114,6 +116,7 @@ public class UserController {
 
     /**
      * 根据关键词查找实验
+     *
      * @param keywords 关键词
      * @return 查找出的实验列表
      */
@@ -129,9 +132,10 @@ public class UserController {
 
     /**
      * 查询所有已经预约实验的信息
+     *
      * @param userPOJO 学生对象
      * @return 查询出的所有符合的信息列表
-     * TODO: 没有加上发布的老师 预约状态
+     * TODO: 没有加上发布的老师
      */
     @CrossOrigin
     @PostMapping("/api/user/queryAppointment")
@@ -144,4 +148,6 @@ public class UserController {
 //    public Result queryAppointableExp() {
 //
 //    }
+
+
 }

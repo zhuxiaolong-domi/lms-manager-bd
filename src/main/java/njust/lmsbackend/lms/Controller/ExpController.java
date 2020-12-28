@@ -2,9 +2,12 @@ package njust.lmsbackend.lms.Controller;
 
 import njust.lmsbackend.lms.POJO.ExperimentPOJO;
 import njust.lmsbackend.lms.Service.ExperimentService;
+import njust.lmsbackend.lms.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,8 +24,8 @@ public class ExpController {
     }
 
     /*测试根据实验编号查找老师*/
-    @RequestMapping("/findTeacher")
-    public String findTeacher(String expId){
+    @PostMapping("/findTeacher")
+    public String findTeacher(@RequestParam String expId){
         return service.findTeacherByExp(expId).toString();
     }
 

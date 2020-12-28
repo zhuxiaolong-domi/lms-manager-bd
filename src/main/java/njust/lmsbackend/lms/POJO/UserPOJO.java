@@ -1,6 +1,7 @@
 package njust.lmsbackend.lms.POJO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 

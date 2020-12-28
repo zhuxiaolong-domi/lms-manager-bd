@@ -21,10 +21,10 @@ public class ComputerLabService {
         return computerlabDAO.findAll(sort);
     }
     /**
-     * @param computerlabPOJO 实验室对象
+     * @param computerLabPOJO 实验室对象
      */
-    public void addComputerLab(ComputerLabPOJO computerlabPOJO) {
-        computerlabDAO.save(computerlabPOJO);
+    public void addComputerLab(ComputerLabPOJO computerLabPOJO) {
+        computerlabDAO.save(computerLabPOJO);
     }
     /**
      * 根据id删除实验室
