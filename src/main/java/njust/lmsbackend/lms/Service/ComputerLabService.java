@@ -21,7 +21,6 @@ public class ComputerLabService {
         return computerlabDAO.findAll(sort);
     }
     /**
-     *增加新实验室
      * @param computerlabPOJO 实验室对象
      */
     public void addComputerLab(ComputerLabPOJO computerlabPOJO) {
@@ -29,6 +28,7 @@ public class ComputerLabService {
     }
     /**
      * 根据id删除实验室
+     *
      * @param id 实验室的id
      */
     public void deleteById(int id) {

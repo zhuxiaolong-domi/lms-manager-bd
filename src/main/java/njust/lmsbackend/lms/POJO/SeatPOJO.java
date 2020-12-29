@@ -10,12 +10,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_seat")
 @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
-public class ComputerLabPOJO {
+public class SeatPOJO {
     @Id
-    @Column(name = "id")
-    private int seatId;
-    private int labId;
-    private int state;
+    @Column(name = "seat_id")
+    int seatId;
+
+    int labId;
+    int state;
 
     public SeatPOJO() {
     }
@@ -26,13 +27,15 @@ public class ComputerLabPOJO {
         this.state = state;
     }
 
-    public int getSeatId() { return seatId; }
+    public int getSeatId() {
+        return seatId;
+    }
 
-    public void setSeatId(int id) {
+    public void setSeatId(int seatId) {
         this.seatId = seatId;
     }
 
-    public String getLabId() {
+    public int getLabId() {
         return labId;
     }
 

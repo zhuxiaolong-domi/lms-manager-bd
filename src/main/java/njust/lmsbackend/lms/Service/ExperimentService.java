@@ -5,13 +5,14 @@ import njust.lmsbackend.lms.DAO.ParticipationDAO;
 import njust.lmsbackend.lms.DAO.StartExpDAO;
 import njust.lmsbackend.lms.DAO.UserDAO;
 import njust.lmsbackend.lms.POJO.ExperimentPOJO;
-import njust.lmsbackend.lms.POJO.ParticipationPOJO;
 import njust.lmsbackend.lms.POJO.StartExpPOJO;
 import njust.lmsbackend.lms.POJO.UserPOJO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,12 +34,12 @@ public class ExperimentService {
 
     /*实验发布管理*/
     /*1.老师添加一个实验*/
-    public boolean startExperiment(String teacherId, ExperimentPOJO experiment){
+    public boolean startExperiment(String teacherId, ExperimentPOJO experiment) {
         /*如果老师不存在直接返回*/
-        if(userDAO.findById(teacherId) == null){
+        if (userDAO.findById(teacherId) == null) {
             return false;
         }
-        experiment.setId(UUID.randomUUID().toString().replaceAll("-",""));
+        experiment.setId(UUID.randomUUID().toString().replaceAll("-", ""));
         experimentDAO.save(experiment);
         StartExpPOJO startExp = new StartExpPOJO();
         startExp.setExpId(experiment.getId());
@@ -48,9 +49,9 @@ public class ExperimentService {
     }
 
     /*2.老师修改已发布的实验*/
-    public boolean updateExperiment(ExperimentPOJO experiment, String teacherId){
+    public boolean updateExperiment(ExperimentPOJO experiment, String teacherId) {
         StartExpPOJO startExp = startExpDAO.findStartExpPOJOByExpIdAndTeacherId(experiment.getId(), teacherId);
-        if(startExp == null){
+        if (startExp == null) {
             return false;
         }
         experimentDAO.save(experiment);
@@ -58,8 +59,8 @@ public class ExperimentService {
     }
 
     /*3.删除已发布实验*/
-    public boolean deleteExperiment(String expId){
-        if(!experimentDAO.existsById(expId)){
+    public boolean deleteExperiment(String expId) {
+        if (!experimentDAO.existsById(expId)) {
             return false;
         }
         startExpDAO.deleteById(expId);
@@ -70,20 +71,56 @@ public class ExperimentService {
 
 
     /*根据实验查找创建的老师*/
-    public UserPOJO findTeacherByExp(String expId){
+    public UserPOJO findTeacherByExp(String expId) {
         Optional<ExperimentPOJO> optional = experimentDAO.findById(expId);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             ExperimentPOJO experiment = optional.get();
             StartExpPOJO startExp = startExpDAO.findStartExpPOJOByExpId(experiment.getId());
-            if(startExp == null){
+            if (startExp == null) {
                 return null;
             }
             Optional<UserPOJO> teacher = userDAO.findById(startExp.getTeacherId());
-            if(!teacher.isPresent()){
+            if (!teacher.isPresent()) {
                 return null;
             }
             return teacher.get();
         }
         return null;
+    }
+
+    /*查询学生信息*/
+    public List<UserPOJO> findAllStudentSelected(String expId) {
+        List<UserPOJO> students = new LinkedList<>();
+        for (var participation : participationDAO.findAllByExpId(expId)) {
+            students.add(userDAO.findUserPOJOById(participation.getStudentId()));
+        }
+        return students;
+    }
+
+    /*下载实验报告*/
+    public String downloadReport(String studentId, String expId) {
+        return participationDAO.findParticipationPOJOByStudentIdAndExpId(studentId, expId).getReport();
+    }
+
+    /*录入成绩以及修改成绩*/
+    public boolean enterScore(String studentId, String expId, Integer score) {
+        if (!experimentDAO.existsById(expId)) {
+            return false;
+        }
+        if (!userDAO.existsById(studentId)) {
+            return false;
+        }
+        int res = participationDAO.updateScore(score, studentId, expId);
+        return res > 0;
+    }
+
+    /**
+     * 根据实验 ID 查询实验名称
+     *
+     * @param id 实验 ID
+     * @return ExperimentPOJO 对象
+     */
+    public ExperimentPOJO findExpNameById(String id) {
+        return experimentDAO.findByExpId(id);
     }
 }

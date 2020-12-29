@@ -1,4 +1,5 @@
 package njust.lmsbackend.lms.Controller;
+
 import njust.lmsbackend.lms.POJO.ComputerLabPOJO;
 import njust.lmsbackend.lms.Result.Result;
 import njust.lmsbackend.lms.Result.ResultFactory;
@@ -13,33 +14,39 @@ public class ComputerLabController {
 
     /**
      * 列出所有实验室
+     *
      * @return 实验室列表
      * @throws Exception 异常
      */
     @CrossOrigin
     @GetMapping("/api/admin/lab")
-    public Result listLabs() throws Exception
-    {
+    public Result listLabs() throws Exception {
         return ResultFactory.buildSuccessResult("查询实验室成功", computerlabService.listAllLabs());
     }
 
+    /**
+     * 添加或更改机房信息
+     *
+     * @param computerLabPOJO 机房对象
+     * @return 修改成功信息
+     */
     @CrossOrigin
     @PostMapping("/api/admin/lab/add")
-    public Result addOrUpdate(@RequestBody ComputerLabPOJO computerlabPOJO)
-    {
-        computerlabService.addComputerLab(computerlabPOJO);
+    public Result addOrUpdateLabs(@RequestBody ComputerLabPOJO computerLabPOJO) {
+        computerlabService.addComputerLab(computerLabPOJO);
         return ResultFactory.buildSuccessResult_p("修改成功", null);
     }
 
     /**
      * 根据id删除现有实验室
-     * @param computerlabPOJO 实验室对象
+     *
+     * @param computerLabPOJO 实验室对象
      * @throws Exception 异常
      */
     @CrossOrigin
-    @PostMapping("/api/admin/lab/delete")
-    public Result delete(@RequestBody ComputerLabPOJO computerlabPOJO) throws Exception {
-        computerlabService.deleteById(computerlabPOJO.getId());
+    @PostMapping("/api/admin/lab/deleteLab")
+    public Result deleteLab(@RequestBody ComputerLabPOJO computerLabPOJO) throws Exception {
+        computerlabService.deleteById(computerLabPOJO.getId());
         return ResultFactory.buildSuccessResult_p("删除成功", null);
     }
 

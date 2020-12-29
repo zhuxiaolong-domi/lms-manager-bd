@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface AppointmentDAO extends JpaRepository<AppointmentPOJO, String> {
 
-    List<AppointmentPOJO> findAllByStudentId(String studentId);
+    //List<AppointmentPOJO> findAllByStudentId(String studentId);
+
+    AppointmentPOJO findByStudentId(String studentId);
 }
