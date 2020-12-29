@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/exp")
 public class ExpController {
     @Autowired
     private ExperimentService service;
@@ -23,7 +22,7 @@ public class ExpController {
     * @Date: 2020/12/27
     */
     @CrossOrigin
-    @RequestMapping("/create")
+    @RequestMapping("/api/teacher/create")
     public Result createExp(String teacherId, ExperimentPOJO experiment){
         service.startExperiment(teacherId,experiment);
         return ResultFactory.buildSuccessResult_p("创建实验成功",null);
@@ -37,7 +36,7 @@ public class ExpController {
     * @Date: 2020/12/27
     */
     @CrossOrigin
-    @RequestMapping("/findTeacher")
+    @RequestMapping("/api/teacher/findTeacher")
     public Result findTeacher(String expId){
         return ResultFactory.buildSuccessResult("根据实验查找老师成功",service.findTeacherByExp(expId));
     }
@@ -50,7 +49,7 @@ public class ExpController {
     * @Date: 2020/12/27
     */
     @CrossOrigin
-    @RequestMapping("/updateExp")
+    @RequestMapping("/api/teacher/updateExp")
     public Result updateExp(String teacherId, ExperimentPOJO experiment){
         service.updateExperiment(experiment,teacherId);
         return ResultFactory.buildSuccessResult_p("修改已发布的实验成果",null);
@@ -64,7 +63,7 @@ public class ExpController {
     * @Date: 2020/12/27
     */
     @CrossOrigin
-    @RequestMapping("/deleteExp")
+    @RequestMapping("/api/teacher/deleteExp")
     public Result deleteExp(String expId){
        return  (service.deleteExperiment(expId) == true)? (ResultFactory.buildSuccessResult_p("删除实验成果",null)):(ResultFactory.buildSuccessResult_p("删除失败",null));
     }
@@ -77,7 +76,7 @@ public class ExpController {
     * @Date: 2020/12/27
     */
     @CrossOrigin
-    @RequestMapping("/queryAllStudentSelect")
+    @RequestMapping("/api/teacher/queryAllStudentSelect")
     public Result queryAllStudentSelect(String expId){
         return ResultFactory.buildSuccessResult("查找所有选择改实验的学生成功",service.findAllStudentSelected(expId));
     }
@@ -90,7 +89,7 @@ public class ExpController {
     * @Date: 2020/12/27
     */
     @CrossOrigin
-    @RequestMapping("/downloadReport")
+    @RequestMapping("/api/teacher/downloadReport")
     public Result downloadReport(String studentId, String expId){
         return ResultFactory.buildSuccessResult("查找实验报告成功",service.downloadReport(studentId,expId));
     }
@@ -103,7 +102,7 @@ public class ExpController {
     * @Date: 2020/12/27 
     */
     @CrossOrigin
-    @RequestMapping("/enterScore")
+    @RequestMapping("/api/teacher/enterScore")
     public Result enterScore(String studentId, String expId, Integer score){
         String res = "";
         if(service.enterScore(studentId,expId,score) == true){
