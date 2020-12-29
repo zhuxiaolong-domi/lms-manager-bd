@@ -1,18 +1,24 @@
 package njust.lmsbackend.lms.Controller;
 
-import njust.lmsbackend.lms.POJO.ExperimentPOJO;
-import njust.lmsbackend.lms.POJO.ParticipitionExpPOJO;
-import njust.lmsbackend.lms.POJO.UserPOJO;
+import njust.lmsbackend.lms.POJO.*;
 import njust.lmsbackend.lms.Result.Result;
 import njust.lmsbackend.lms.Result.ResultFactory;
+import njust.lmsbackend.lms.Service.ComputerLabService;
+import njust.lmsbackend.lms.Service.ExperimentService;
 import njust.lmsbackend.lms.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    ExperimentService experimentService;
+    @Autowired
+    ComputerLabService computerLabService;
 
     /**
      * 列出所有用户
@@ -52,7 +58,7 @@ public class UserController {
     }
 
     /**
-     * 根据id删除id操作
+     * 根据 id 删除用户操作
      *
      * @param userPOJO 用户对象
      * @throws Exception 异常
@@ -72,33 +78,39 @@ public class UserController {
     @CrossOrigin
     @GetMapping("/api/user/exp")
     public Result listExps() {
-        return ResultFactory.buildSuccessResult("查询实验成功", userService.listAllExps());
+        List<ExperimentPOJO> Exps = userService.listAllExps();
+        for (ExperimentPOJO exp : Exps) {
+            if (exp.getTeacherName() == null) {
+                exp.setTeacherName((experimentService.findTeacherByExp(exp.getId())).getName());
+            }
+        }
+        return ResultFactory.buildSuccessResult("查询实验成功", Exps);
     }
 
 
     /**
      * 选择实验
      *
-     * @param participitionExpPOJO 参与表-实验表 间接类
+     * @param participationExpPOJO 参与表-实验表 间接类
      * @return 选择成功
      */
     @CrossOrigin
     @PostMapping("/api/user/selectExp")
-    public Result selectExp(@RequestBody ParticipitionExpPOJO participitionExpPOJO) {
-        userService.selectExpById(participitionExpPOJO.experimentPOJO.getId(), participitionExpPOJO.userPOJO.getId());
+    public Result selectExp(@RequestBody ParticipationExpPOJO participationExpPOJO) {
+        userService.selectExpById(participationExpPOJO.experimentPOJO.getId(), participationExpPOJO.userPOJO.getId());
         return ResultFactory.buildSuccessResult_p("选择实验成功", null);
     }
 
     /**
      * 退选实验
      *
-     * @param participitionExpPOJO 参与和实验的中间类
+     * @param participationExpPOJO 参与和实验的中间类
      * @return 退选实验成功
      */
     @CrossOrigin
     @PostMapping("/api/user/withdrawExp")
-    public Result withDrawExp(@RequestBody ParticipitionExpPOJO participitionExpPOJO) {
-        userService.withDrawById(participitionExpPOJO.experimentPOJO.getId(), participitionExpPOJO.userPOJO.getId());
+    public Result withDrawExp(@RequestBody ParticipationExpPOJO participationExpPOJO) {
+        userService.withDrawById(participationExpPOJO.experimentPOJO.getId(), participationExpPOJO.userPOJO.getId());
         return ResultFactory.buildSuccessResult_p("退选实验成功", null);
     }
 
@@ -135,19 +147,22 @@ public class UserController {
      *
      * @param userPOJO 学生对象
      * @return 查询出的所有符合的信息列表
-     * TODO: 没有加上发布的老师
      */
     @CrossOrigin
     @PostMapping("/api/user/queryAppointment")
     public Result queryAppointment(@RequestBody UserPOJO userPOJO) {
-        return ResultFactory.buildSuccessResult_p("查询所有已预约实验信息成功", userService.queryAppointmentById(userPOJO.getId()));
+        AppointmentPOJO appointmentPOJOList = userService.queryAppointmentById(userPOJO.getId());
+
+        ComputerLabPOJO computerLabPOJO = computerLabService.findAddressByLabId(appointmentPOJOList.getLab_id());
+        appointmentPOJOList.setAddress(computerLabPOJO.getAddress());
+
+        ParticipationPOJO participationPOJO = userService.findExpIdByStudentId(appointmentPOJOList.getStudentId());
+        appointmentPOJOList.setTeacherName(experimentService.findTeacherByExp(participationPOJO.getExp_id()).getName());
+
+        ExperimentPOJO experimentPOJO = experimentService.findExpNameById(participationPOJO.getExp_id());
+        appointmentPOJOList.setExpName(experimentPOJO.getName());
+
+        return ResultFactory.buildSuccessResult_p("查询所有已预约实验信息成功", appointmentPOJOList);
     }
-
-//    @CrossOrigin
-//    @GetMapping("/api/exp")
-//    public Result queryAppointableExp() {
-//
-//    }
-
 
 }

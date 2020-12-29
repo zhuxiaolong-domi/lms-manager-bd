@@ -2,10 +2,7 @@ package njust.lmsbackend.lms.POJO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_appointment")
@@ -27,14 +24,50 @@ public class AppointmentPOJO {
      */
     private int time;
 
+    @Transient
+    String teacherName;
+
+    @Transient
+    String address;
+
+    @Transient
+    String expName;
+
     public AppointmentPOJO() {
     }
 
-    public AppointmentPOJO(String studentId, int lab_id, int seat_id, int time) {
+    public AppointmentPOJO(String studentId, int lab_id, int seat_id, int time, String teacherName, String address, String expName) {
         this.studentId = studentId;
         this.lab_id = lab_id;
         this.seat_id = seat_id;
         this.time = time;
+        this.teacherName = teacherName;
+        this.address = address;
+        this.expName = expName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getExpName() {
+        return expName;
+    }
+
+    public void setExpName(String expName) {
+        this.expName = expName;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
     public String getStudentId() {

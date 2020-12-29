@@ -11,10 +11,13 @@ import java.util.Date;
 public class ExperimentPOJO {
     @Id
     @Column(name = "id")
-    String id;
+    String expId;
 
     @Column(name = "name")
     String name;
+
+    @Transient
+    String teacherName;
 
     private Date start;
     private Date end;
@@ -25,9 +28,10 @@ public class ExperimentPOJO {
     public ExperimentPOJO() {
     }
 
-    public ExperimentPOJO(String id, String name, Date start, Date end, String description, int max) {
-        this.id = id;
+    public ExperimentPOJO(String expId, String name, String teacherName, Date start, Date end, String description, int max) {
+        this.expId = expId;
         this.name = name;
+        this.teacherName = teacherName;
         this.start = start;
         this.end = end;
         this.description = description;
@@ -35,11 +39,19 @@ public class ExperimentPOJO {
     }
 
     public String getId() {
-        return id;
+        return expId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public void setId(String expId) {
+        this.expId = expId;
     }
 
     public String getName() {

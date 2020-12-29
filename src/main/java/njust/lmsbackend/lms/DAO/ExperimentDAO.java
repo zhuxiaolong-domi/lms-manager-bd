@@ -11,4 +11,6 @@ import java.util.List;
 public interface ExperimentDAO extends JpaRepository<ExperimentPOJO, String> {
 
     List<ExperimentPOJO> findAllByName(String keywords);
+
+    ExperimentPOJO findByExpId(String expId);
 }

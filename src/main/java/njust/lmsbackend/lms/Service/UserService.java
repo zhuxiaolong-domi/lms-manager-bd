@@ -2,7 +2,7 @@ package njust.lmsbackend.lms.Service;
 
 import njust.lmsbackend.lms.DAO.AppointmentDAO;
 import njust.lmsbackend.lms.DAO.ExperimentDAO;
-import njust.lmsbackend.lms.DAO.ParticipitionDAO;
+import njust.lmsbackend.lms.DAO.ParticipationDAO;
 import njust.lmsbackend.lms.DAO.UserDAO;
 import njust.lmsbackend.lms.POJO.AppointmentPOJO;
 import njust.lmsbackend.lms.POJO.ExperimentPOJO;
@@ -21,7 +21,7 @@ public class UserService {
     @Autowired
     ExperimentDAO experimentDAO;
     @Autowired
-    ParticipitionDAO participitionDAO;
+    ParticipationDAO participationDAO;
     @Autowired
     AppointmentDAO appointmentDAO;
 
@@ -82,7 +82,7 @@ public class UserService {
      */
     public void selectExpById(String exp_id, String studentId) {
         ParticipationPOJO selectParticipationPOJO = new ParticipationPOJO(exp_id, studentId);
-        participitionDAO.save(selectParticipationPOJO);
+        participationDAO.save(selectParticipationPOJO);
     }
 
     /**
@@ -93,7 +93,7 @@ public class UserService {
      */
     public void withDrawById(String exp_id, String studentId) {
         //ParticipitionPOJO withDrawParticipitionPOJO = new ParticipitionPOJO(exp_id, studentId);
-        participitionDAO.deleteByExpIdAndStudentId(exp_id, studentId);
+        participationDAO.deleteByExpIdAndStudentId(exp_id, studentId);
     }
 
     /**
@@ -103,7 +103,7 @@ public class UserService {
      * @return 查询出的成绩列表
      */
     public List<ParticipationPOJO> queryAllScoreById(String studentId) {
-        return participitionDAO.findAllByStudentId(studentId);
+        return participationDAO.findAllByStudentId(studentId);
     }
 
     /**
@@ -122,7 +122,17 @@ public class UserService {
      * @param studentId 学生学号
      * @return 查询出的所有符合的信息列表
      */
-    public List<AppointmentPOJO> queryAppointmentById(String studentId) {
-        return appointmentDAO.findAllByStudentId(studentId);
+    public AppointmentPOJO queryAppointmentById(String studentId) {
+        return appointmentDAO.findByStudentId(studentId);
+    }
+
+    /**
+     * 根据学生 ID 查询 实验 ID
+     *
+     * @param studentId 学生 ID
+     * @return ParticipationPOJO 对象
+     */
+    public ParticipationPOJO findExpIdByStudentId(String studentId) {
+        return participationDAO.findByStudentId(studentId);
     }
 }
