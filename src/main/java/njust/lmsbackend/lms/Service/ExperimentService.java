@@ -5,7 +5,6 @@ import njust.lmsbackend.lms.DAO.ParticipationDAO;
 import njust.lmsbackend.lms.DAO.StartExpDAO;
 import njust.lmsbackend.lms.DAO.UserDAO;
 import njust.lmsbackend.lms.POJO.ExperimentPOJO;
-import njust.lmsbackend.lms.POJO.ParticipationPOJO;
 import njust.lmsbackend.lms.POJO.StartExpPOJO;
 import njust.lmsbackend.lms.POJO.UserPOJO;
 import org.springframework.beans.factory.annotation.Autowired;
