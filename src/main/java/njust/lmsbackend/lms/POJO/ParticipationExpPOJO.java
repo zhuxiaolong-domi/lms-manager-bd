@@ -4,16 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
-public class ParticipitionExpPOJO {
+public class ParticipationExpPOJO {
 
 
     public ExperimentPOJO experimentPOJO;
     public UserPOJO userPOJO;
 
-    public ParticipitionExpPOJO() {
+    public ParticipationExpPOJO() {
     }
 
-    public ParticipitionExpPOJO(ExperimentPOJO experimentPOJO, UserPOJO userPOJO) {
+    public ParticipationExpPOJO(ExperimentPOJO experimentPOJO, UserPOJO userPOJO) {
         this.experimentPOJO = experimentPOJO;
         this.userPOJO = userPOJO;
     }
