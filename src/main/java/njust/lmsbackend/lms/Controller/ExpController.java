@@ -4,10 +4,14 @@ import njust.lmsbackend.lms.POJO.ExperimentPOJO;
 import njust.lmsbackend.lms.Result.Result;
 import njust.lmsbackend.lms.Result.ResultFactory;
 import njust.lmsbackend.lms.Service.ExperimentService;
+import njust.lmsbackend.lms.Util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class ExpController {
@@ -112,4 +116,33 @@ public class ExpController {
         }
         return ResultFactory.buildSuccessResult_p(res, null);
     }
+
+    /**
+    * @Description:  处理下载实验报告的请求
+    * @Param:
+    * @return:
+    * @Author: Liu ZhiTian
+    * @Date: 2020/12/30
+    */
+    @CrossOrigin
+    @RequestMapping("/api/teacher/download")
+    public void download(String fileName, HttpServletResponse response, HttpServletRequest request){
+        try {
+            if (!FileUtils.isValidFilename(fileName)) {
+                throw new Exception();
+            }
+            String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
+            String filePath = "D:\\lmsDownload\\download" + fileName; //这里的路径改为保存文件的路径
+
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("multipart/form-data");
+            response.setHeader("Content-Disposition",
+                    "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, realFileName));
+            FileUtils.writeBytes(filePath, response.getOutputStream());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return;
+    }
+
 }
