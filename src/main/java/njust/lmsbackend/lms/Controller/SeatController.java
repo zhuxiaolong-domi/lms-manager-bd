@@ -1,9 +1,8 @@
 package njust.lmsbackend.lms.Controller;
-import com.sun.xml.txw2.output.ResultFactory;
+import njust.lmsbackend.lms.Result.ResultFactory;
 import njust.lmsbackend.lms.POJO.ComputerLabPOJO;
 import njust.lmsbackend.lms.POJO.SeatPOJO;
 import njust.lmsbackend.lms.Result.Result;
-import njust.lmsbackend.lms.Result.ResultFactory;
 import njust.lmsbackend.lms.Service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
