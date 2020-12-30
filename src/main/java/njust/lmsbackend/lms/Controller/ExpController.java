@@ -12,11 +12,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 public class ExpController {
     @Autowired
     private ExperimentService service;
+    
+    /** 
+    * @Description: 教师查询所有创建的实验 
+    * @Param:  teacherId 教师的工号
+    * @return:  
+    * @Author: Liu ZhiTian 
+    * @Date: 2020/12/30 
+    */
+    @CrossOrigin
+    @RequestMapping("/api/teacher/allExp")
+    public Result allExp(String teacherId){
+        return ResultFactory.buildSuccessResult("查找成功",service.queryAllExpByTeacher(teacherId));
+    }
 
     /**
      * @Description: 创建实验
@@ -71,6 +85,29 @@ public class ExpController {
     public Result deleteExp(String expId) {
         return (service.deleteExperiment(expId) == true) ? (ResultFactory.buildSuccessResult_p("删除实验成果", null)) : (ResultFactory.buildSuccessResult_p("删除失败", null));
     }
+
+    /**
+    * @Description: 批量删除已发布的实验
+    * @Param:  allExpId 所有要删除的实验编号，按照如下格式"1:2:3:4" , teacherId 教师工号
+    * @return:  删除后教师所有的实验
+    * @Author: Liu ZhiTian
+    * @Date: 2020/12/30
+    */
+    @CrossOrigin
+    @RequestMapping("/api/teacher/batchDeleteExp")
+    public Result batchDeleteExp(String allExpId, String teacherId){
+        String[] ids = allExpId.split(":");
+        List<ExperimentPOJO> experiments = null;
+        String msg = "";
+        if(service.batchDeleteExperiment(ids)){
+            msg = "批量删除成功！";
+            experiments = service.queryAllExpByTeacher(teacherId);
+        }else{
+            msg = "批量删除失败";
+        }
+        return ResultFactory.buildSuccessResult(msg,experiments);
+    }
+
 
     /**
      * @Description: 查询所选实验的所有学生信息

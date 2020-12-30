@@ -4,17 +4,12 @@ import njust.lmsbackend.lms.DAO.ExperimentDAO;
 import njust.lmsbackend.lms.DAO.ParticipationDAO;
 import njust.lmsbackend.lms.DAO.StartExpDAO;
 import njust.lmsbackend.lms.DAO.UserDAO;
-import njust.lmsbackend.lms.POJO.ExperimentPOJO;
-import njust.lmsbackend.lms.POJO.StartExpPOJO;
-import njust.lmsbackend.lms.POJO.UserPOJO;
+import njust.lmsbackend.lms.POJO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -68,6 +63,32 @@ public class ExperimentService {
         experimentDAO.deleteById(expId);
         return true;
     }
+
+    /*4.批量删除已发布的实验*/
+    public boolean batchDeleteExperiment(String[] ids){
+        boolean flag = true;
+        for(var expId : ids){
+            flag = this.deleteExperiment(expId);
+        }
+
+        return flag;
+    }
+
+    /*5.根据老师工号查找所有的实验*/
+    public List<ExperimentPOJO> queryAllExpByTeacher(String teacherId){
+        List<ExperimentPOJO> list = new LinkedList<>();
+        if(teacherId == null || !userDAO.findById(teacherId).isPresent()){
+            return null;
+        }
+        UserPOJO teacher = userDAO.findUserPOJOById(teacherId);
+        for(var tmp:startExpDAO.findStartExpPOJOSByTeacherId(teacherId)){
+            var exp = experimentDAO.findByExpId(tmp.getExpId());
+            exp.setTeacherName(teacher.getName());
+            list.add(exp);
+        }
+        return list;
+    }
+
 
 
     /*根据实验查找创建的老师*/
