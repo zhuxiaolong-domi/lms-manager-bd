@@ -1,4 +1,5 @@
 package njust.lmsbackend.lms.DAO;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class UploadFileResponseDAO {
     private String uploadDir;
 
-    public  String getUploadDir() {
+    public String getUploadDir() {
         return uploadDir;
     }
 

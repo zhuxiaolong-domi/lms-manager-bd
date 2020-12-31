@@ -24,6 +24,7 @@ public class FileService {
     private final Path fileStorageLocation;
     @Autowired
     ParticipationDAO participationDAO;
+
     @Autowired
     public FileService(UploadFileResponseDAO uploadFileResponseDAO) {
         this.fileStorageLocation = Paths.get(uploadFileResponseDAO.getUploadDir()).toAbsolutePath().normalize();
@@ -46,7 +47,7 @@ public class FileService {
 
         try {
             // Check if the file's name contains invalid characters
-            if(fileName.contains("..")) {
+            if (fileName.contains("..")) {
                 throw new FileException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 
@@ -62,6 +63,7 @@ public class FileService {
 
     /**
      * 加载文件
+     *
      * @param fileName 文件名
      * @return 文件
      */
@@ -69,7 +71,7 @@ public class FileService {
         try {
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
-            if(resource.exists()) {
+            if (resource.exists()) {
                 return resource;
             } else {
                 throw new FileException("File not found " + fileName);
@@ -79,8 +81,8 @@ public class FileService {
         }
     }
 
-    public void SaveParticipation(String studentId,String expId,String report){
-        ParticipationPOJO participationPOJO = new ParticipationPOJO(studentId,expId,report);
+    public void SaveParticipation(String studentId, String expId, String report) {
+        ParticipationPOJO participationPOJO = new ParticipationPOJO(studentId, expId, report);
         participationDAO.save(participationPOJO);
     }
 }

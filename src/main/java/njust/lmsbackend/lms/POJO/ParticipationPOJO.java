@@ -25,7 +25,7 @@ public class ParticipationPOJO {
         this.expId = expId;
     }
 
-    public ParticipationPOJO(String studentId, String expId,  String report) {
+    public ParticipationPOJO(String studentId, String expId, String report) {
         this.studentId = studentId;
         this.expId = expId;
         this.report = report;

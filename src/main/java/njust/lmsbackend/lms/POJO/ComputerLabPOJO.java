@@ -15,14 +15,15 @@ public class ComputerLabPOJO {
     private String address;
     private int capacity;
     private int rest;
+
     public ComputerLabPOJO() {
     }
 
-    public ComputerLabPOJO(int id, String address, int capacity,int rest) {
+    public ComputerLabPOJO(int id, String address, int capacity, int rest) {
         this.id = id;
         this.address = address;
         this.capacity = capacity;
-        this.rest=rest;
+        this.rest = rest;
     }
 
     public int getId() {

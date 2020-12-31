@@ -1,4 +1,5 @@
 package njust.lmsbackend.lms.Result;
+
 public class ResultFactory {
     public static Result buildSuccessResult(String message, Object data) {
         return buildResult(ResultCode.SUCCESS, message, data);

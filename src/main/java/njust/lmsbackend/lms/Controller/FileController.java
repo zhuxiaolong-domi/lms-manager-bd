@@ -1,5 +1,8 @@
 package njust.lmsbackend.lms.Controller;
+
 import njust.lmsbackend.lms.POJO.*;
+import njust.lmsbackend.lms.Result.Result;
+import njust.lmsbackend.lms.Result.ResultFactory;
 import njust.lmsbackend.lms.Service.FileService;
 import njust.lmsbackend.lms.DAO.UploadFileResponseDAO;
 import njust.lmsbackend.lms.Service.UserService;
@@ -31,22 +34,22 @@ public class FileController {
 
     @ResponseBody
     @PostMapping("/api/admin/uploadFile")
-    public FilePropertiesPOJO uploadFile(@RequestParam("file") MultipartFile file, @RequestBody UserPOJO userPOJO){
+    public Result uploadFile(@RequestParam("file") MultipartFile file, @RequestParam String studentId) {
         String fileName = fileService.storeFile(file);
-        String studentId = userPOJO.getId();
+        //String studentId = userPOJO.getId();
 
-        AppointmentPOJO appointmentPOJOList = userService.queryAppointmentById(userPOJO.getId());
+        AppointmentPOJO appointmentPOJOList = userService.queryAppointmentById(studentId);
         ParticipationPOJO participationPOJO = userService.findExpIdByStudentId(appointmentPOJOList.getStudentId());
-        String expId =participationPOJO.getExp_id();
+        String expId = participationPOJO.getExp_id();
 
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
                 .path(fileName)
                 .toUriString();
-        fileService.SaveParticipation(studentId,expId,fileDownloadUri);
-        return new FilePropertiesPOJO(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize());
+        fileService.SaveParticipation(studentId, expId, fileDownloadUri);
+        return ResultFactory.buildSuccessResult_p("上传文件成功", new FilePropertiesPOJO(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize()));
 
     }
 
