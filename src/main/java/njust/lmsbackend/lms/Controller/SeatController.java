@@ -18,7 +18,7 @@ public class SeatController {
      * @throws Exception 异常
      */
     @CrossOrigin
-    @GetMapping("/api/admin/seat")
+    @GetMapping("/api/seat")
     public Result listSeats() throws Exception
     {
         return ResultFactory.buildSuccessResult("查询机位信息成功", seatService.listAllSeats());
@@ -43,7 +43,7 @@ public class SeatController {
     @CrossOrigin
     @PostMapping("/api/admin/seat/update")
     public Result update(@RequestBody ComputerLabPOJO computerLabPOJO,SeatPOJO seatPOJO,int labId,int seatId){
-        seatService.changeSeatState(computerLabPOJO,seatPOJO,labId);
+        seatService.changeSeatState(seatPOJO,labId);
         return ResultFactory.buildSuccessResult_p("更新成功",null);
     }
 

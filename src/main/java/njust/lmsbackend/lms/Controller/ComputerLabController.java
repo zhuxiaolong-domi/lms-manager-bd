@@ -5,6 +5,8 @@ import njust.lmsbackend.lms.Result.Result;
 import njust.lmsbackend.lms.Result.ResultFactory;
 import njust.lmsbackend.lms.Service.ComputerLabService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +21,7 @@ public class ComputerLabController {
      * @throws Exception 异常
      */
     @CrossOrigin
-    @GetMapping("/api/admin/lab")
+    @GetMapping("/api/lab")
     public Result listLabs() throws Exception {
         return ResultFactory.buildSuccessResult("查询实验室成功", computerlabService.listAllLabs());
     }
@@ -31,7 +33,9 @@ public class ComputerLabController {
      * @return 修改成功信息
      */
     @CrossOrigin
-    @PostMapping("/api/admin/lab/add")
+    @Modifying
+    @Transactional
+    @PostMapping("/api/lab/add")
     public Result addOrUpdateLabs(@RequestBody ComputerLabPOJO computerLabPOJO) {
         computerlabService.addComputerLab(computerLabPOJO);
         return ResultFactory.buildSuccessResult_p("修改成功", null);
@@ -44,7 +48,9 @@ public class ComputerLabController {
      * @throws Exception 异常
      */
     @CrossOrigin
-    @PostMapping("/api/admin/lab/deleteLab")
+    @Modifying
+    @Transactional
+    @PostMapping("/api/lab/delete")
     public Result deleteLab(@RequestBody ComputerLabPOJO computerLabPOJO) throws Exception {
         computerlabService.deleteById(computerLabPOJO.getId());
         return ResultFactory.buildSuccessResult_p("删除成功", null);

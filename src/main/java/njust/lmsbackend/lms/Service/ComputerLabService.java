@@ -44,24 +44,21 @@ public class ComputerLabService {
      * @param labId
      * @param changeNum
      */
-    public void updateRestNum(ComputerLabPOJO computerLabPOJO,int labId,int changeNum){
-        computerLabPOJO.setRest(seatDAO.updateCanUsedSeat(labId)+changeNum);
-    }
 
     /**
      * 查询指定实验室地址
-     * @param lab_id
+     * @param id
      * @return
      */
-    public ComputerLabPOJO findAddressByLabId(int lab_id) {
-        return computerlabDAO.findById(lab_id);
+    public ComputerLabPOJO findAddressByLabId(int id) {
+        return computerlabDAO.findComputerLabPOJOById(id);
     }
 
     /**
      * 查询指定实验室容量
      */
-    public ComputerLabPOJO findCapacityByLabId(int lab_id){
-        return  computerlabDAO.findById(lab_id);
+    public ComputerLabPOJO findCapacityByLabId(int id){
+        return  computerlabDAO.findComputerLabPOJOById(id);
     }
 
 }

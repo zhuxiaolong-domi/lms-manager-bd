@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface ComputerLabDAO extends JpaRepository<ComputerLabPOJO, Integer> {
-    ComputerLabPOJO findById(int id);
+    ComputerLabPOJO findComputerLabPOJOById(int id);
 }

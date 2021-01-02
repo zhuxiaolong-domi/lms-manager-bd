@@ -14,7 +14,6 @@ public class ComputerLabPOJO {
     int id;
     private String address;
     private int capacity;
-    private int rest;
     public ComputerLabPOJO() {
     }
 
@@ -22,7 +21,6 @@ public class ComputerLabPOJO {
         this.id = id;
         this.address = address;
         this.capacity = capacity;
-        this.rest=rest;
     }
 
     public int getId() {
@@ -47,14 +45,6 @@ public class ComputerLabPOJO {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-    }
-
-    public int getRest() {
-        return rest;
-    }
-
-    public void setRest(int rest) {
-        this.rest = rest;
     }
 
 

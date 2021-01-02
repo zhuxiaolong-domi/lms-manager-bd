@@ -20,7 +20,7 @@ public class SeatService {
      */
     public List<SeatPOJO> listAllSeats()
     {
-        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        Sort sort = Sort.by(Sort.Direction.ASC, "labId");
         return seatDAO.findAll(sort);
     }
     /**
@@ -30,7 +30,6 @@ public class SeatService {
 
         seatDAO.save(seatPOJO);
         computerLabPOJO.setCapacity(computerLabPOJO.getCapacity()+1);
-        computerLabService.updateRestNum(computerLabPOJO,labId,1);
         seatDAO.save(seatPOJO);
     }
     /**
@@ -39,22 +38,19 @@ public class SeatService {
     public void deleteSeat(ComputerLabPOJO computerLabPOJO,SeatPOJO seatPOJO,int labId,int seatId,int deleteNum) {
         seatDAO.deleteSeatPOJOByLabIdAndSeatId(labId,seatId);
         computerLabPOJO.setCapacity(computerLabPOJO.getCapacity()-deleteNum);
-        computerLabService.updateRestNum(computerLabPOJO,labId,-deleteNum);
         seatDAO.save(seatPOJO);
     }
 
     /**
      * 更改当前机位状态
      */
-    public void changeSeatState(ComputerLabPOJO computerLabPOJO,SeatPOJO seatPOJO,int labId) {
+    public void changeSeatState(SeatPOJO seatPOJO,int labId) {
         if(seatPOJO.getState()==1){
             seatPOJO.setState(0);
-            computerLabService.updateRestNum(computerLabPOJO,labId,-1);
         }
 
         else{
             seatPOJO.setState(1);
-            computerLabService.updateRestNum(computerLabPOJO,labId,1);
         }
 
         seatDAO.save(seatPOJO);
