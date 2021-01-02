@@ -2,6 +2,8 @@ package njust.lmsbackend.lms.Service;
 
 import njust.lmsbackend.lms.DAO.ComputerLabDAO;
 import njust.lmsbackend.lms.POJO.ComputerLabPOJO;
+import njust.lmsbackend.lms.DAO.SeatDAO;
+import njust.lmsbackend.lms.POJO.SeatPOJO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import java.util.List;
 public class ComputerLabService {
     @Autowired
     ComputerLabDAO computerlabDAO;
+    SeatDAO seatDAO;
 
     /**
      * 返回所有的实验室 根据id
@@ -24,10 +27,10 @@ public class ComputerLabService {
     }
 
     /**
-     * @param computerLabPOJO 实验室对象
+     * @param computerlabPOJO 实验室对象
      */
-    public void addComputerLab(ComputerLabPOJO computerLabPOJO) {
-        computerlabDAO.save(computerLabPOJO);
+    public void addComputerLab(ComputerLabPOJO computerlabPOJO) {
+        computerlabDAO.save(computerlabPOJO);
     }
 
     /**
@@ -40,12 +43,31 @@ public class ComputerLabService {
     }
 
     /**
-     * 根据机房 ID 查询机房位置
+     * 更新实验室可用机位数目
      *
-     * @param lab_id 机房 ID
-     * @return ComputerLabPOJO 对象
+     * @param computerLabPOJO
+     * @param labId
+     * @param changeNum
+     */
+    public void updateRestNum(ComputerLabPOJO computerLabPOJO, int labId, int changeNum) {
+        computerLabPOJO.setRest(seatDAO.updateCanUsedSeat(labId) + changeNum);
+    }
+
+    /**
+     * 查询指定实验室地址
+     *
+     * @param lab_id
+     * @return
      */
     public ComputerLabPOJO findAddressByLabId(int lab_id) {
         return computerlabDAO.findById(lab_id);
     }
+
+    /**
+     * 查询指定实验室容量
+     */
+    public ComputerLabPOJO findCapacityByLabId(int lab_id) {
+        return computerlabDAO.findById(lab_id);
+    }
+
 }

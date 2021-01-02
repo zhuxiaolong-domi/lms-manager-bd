@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tb_start_exp")
 @Component
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class StartExpPOJO {
@@ -20,4 +19,20 @@ public class StartExpPOJO {
 
     @Column(name = "teacher_id", length = 12)
     private String teacherId;
+
+    public String getExpId() {
+        return expId;
+    }
+
+    public void setExpId(String expId) {
+        this.expId = expId;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
 }

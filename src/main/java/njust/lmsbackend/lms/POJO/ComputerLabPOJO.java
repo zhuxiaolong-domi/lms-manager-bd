@@ -2,10 +2,7 @@ package njust.lmsbackend.lms.POJO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_computerlab")
@@ -17,14 +14,16 @@ public class ComputerLabPOJO {
     int id;
     private String address;
     private int capacity;
+    private int rest;
 
     public ComputerLabPOJO() {
     }
 
-    public ComputerLabPOJO(int id, String address, int capacity) {
+    public ComputerLabPOJO(int id, String address, int capacity, int rest) {
         this.id = id;
         this.address = address;
         this.capacity = capacity;
+        this.rest = rest;
     }
 
     public int getId() {
@@ -50,4 +49,14 @@ public class ComputerLabPOJO {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
+    public int getRest() {
+        return rest;
+    }
+
+    public void setRest(int rest) {
+        this.rest = rest;
+    }
+
+
 }

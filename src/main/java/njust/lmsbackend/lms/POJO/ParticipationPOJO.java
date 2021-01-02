@@ -20,9 +20,19 @@ public class ParticipationPOJO {
     public ParticipationPOJO() {
     }
 
+    public ParticipationPOJO(String report) {
+        this.report = report;
+    }
+
     public ParticipationPOJO(String expId, String studentId) {
         this.studentId = studentId;
         this.expId = expId;
+    }
+
+    public ParticipationPOJO(String studentId, String expId, String report) {
+        this.studentId = studentId;
+        this.expId = expId;
+        this.report = report;
     }
 
     public ParticipationPOJO(String studentId, String expId, int score, String report) {

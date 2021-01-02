@@ -51,7 +51,7 @@ public class UserService {
      * @return 实验列表
      */
     public List<ExperimentPOJO> listAllExps() {
-        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        Sort sort = Sort.by(Sort.Direction.ASC, "expId");
         return experimentDAO.findAll(sort);
     }
 
@@ -134,5 +134,9 @@ public class UserService {
      */
     public ParticipationPOJO findExpIdByStudentId(String studentId) {
         return participationDAO.findByStudentId(studentId);
+    }
+
+    public UserPOJO findPwdById(String id) {
+        return userDAO.findUserPOJOById(id);
     }
 }
