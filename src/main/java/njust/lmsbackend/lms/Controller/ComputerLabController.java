@@ -27,10 +27,10 @@ public class ComputerLabController {
     }
 
     /**
-     * 添加或更改机房信息
+     * 添加机房信息
      *
      * @param computerLabPOJO 机房对象
-     * @return 修改成功信息
+     * @return 添加成功信息
      */
     @CrossOrigin
     @Modifying
@@ -38,12 +38,11 @@ public class ComputerLabController {
     @PostMapping("/api/lab/add")
     public Result addOrUpdateLabs(@RequestBody ComputerLabPOJO computerLabPOJO) {
         computerlabService.addComputerLab(computerLabPOJO);
-        return ResultFactory.buildSuccessResult_p("修改成功", null);
+        return ResultFactory.buildSuccessResult_p("添加成功", null);
     }
 
     /**
-     * 根据id删除现有实验室
-     *
+     * 删除现有实验室
      * @param computerLabPOJO 实验室对象
      * @throws Exception 异常
      */
@@ -56,4 +55,17 @@ public class ComputerLabController {
         return ResultFactory.buildSuccessResult_p("删除成功", null);
     }
 
+    /**
+     * 更改机房信息
+     * @param computerLabPOJO 机房对象
+     * @return 修改成功信息
+     */
+    @CrossOrigin
+    @Modifying
+    @Transactional
+    @PostMapping("/api/lab/update")
+    public Result updateLabs(@RequestBody ComputerLabPOJO computerLabPOJO) {
+        computerlabService.updateCapacity(computerLabPOJO);
+        return ResultFactory.buildSuccessResult_p("修改成功", null);
+    }
 }

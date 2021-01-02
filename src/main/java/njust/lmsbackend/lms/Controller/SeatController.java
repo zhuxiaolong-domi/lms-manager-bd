@@ -29,10 +29,10 @@ public class SeatController {
      * @param seatPOJO 机位对象
      */
     @CrossOrigin
-    @PostMapping("/api/admin/seat/add")
-    public Result add(@RequestBody SeatPOJO seatPOJO,ComputerLabPOJO computerLabPOJO,int labId)
+    @PostMapping("/api/seat/add")
+    public Result add(@RequestBody SeatPOJO seatPOJO,ComputerLabPOJO computerLabPOJO)
     {
-        seatService.addSeat(seatPOJO,computerLabPOJO,labId);
+        seatService.addSeat(seatPOJO,computerLabPOJO);
         return ResultFactory.buildSuccessResult_p("添加成功", null);
     }
 
@@ -41,10 +41,10 @@ public class SeatController {
      * @param seatPOJO 机位对象
      */
     @CrossOrigin
-    @PostMapping("/api/admin/seat/update")
-    public Result update(@RequestBody ComputerLabPOJO computerLabPOJO,SeatPOJO seatPOJO,int labId,int seatId){
-        seatService.changeSeatState(seatPOJO,labId);
-        return ResultFactory.buildSuccessResult_p("更新成功",null);
+    @PostMapping("/api/seat/update")
+    public Result update(@RequestBody SeatPOJO seatPOJO){
+        seatService.changeSeatState(seatPOJO);
+        return ResultFactory.buildSuccessResult_p("修改成功",null);
     }
 
     /**
@@ -52,9 +52,9 @@ public class SeatController {
      * @param seatPOJO 机位对象
      */
     @CrossOrigin
-    @PostMapping("/api/admin/seat/delete")
-    public Result delete(@RequestBody ComputerLabPOJO computerLabPOJO,SeatPOJO seatPOJO,int labId,int seatId,int deleteNum) throws Exception {
-        seatService.deleteSeat(computerLabPOJO,seatPOJO,labId,seatId,deleteNum);
+    @PostMapping("/api/seat/delete")
+    public Result deleteSeat(@RequestBody SeatPOJO seatPOJO,ComputerLabPOJO computerLabPOJO) throws Exception {
+        seatService.deleteSeat(seatPOJO,computerLabPOJO);
         return ResultFactory.buildSuccessResult_p("删除成功", null);
     }
 

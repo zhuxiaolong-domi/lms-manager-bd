@@ -23,12 +23,14 @@ public class ComputerLabService {
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
         return computerlabDAO.findAll(sort);
     }
+
     /**
      * @param computerlabPOJO 实验室对象
      */
     public void addComputerLab(ComputerLabPOJO computerlabPOJO) {
         computerlabDAO.save(computerlabPOJO);
     }
+
     /**
      * 根据id删除实验室
      *
@@ -40,11 +42,10 @@ public class ComputerLabService {
 
     /**
      * 更新实验室可用机位数目
-     * @param computerLabPOJO
-     * @param labId
-     * @param changeNum
      */
-
+    public  void updateCapacity(ComputerLabPOJO computerLabPOJO){
+        computerLabPOJO.setCapacity(computerlabDAO.recentCapacity(computerLabPOJO.getId()));
+    }
     /**
      * 查询指定实验室地址
      * @param id
