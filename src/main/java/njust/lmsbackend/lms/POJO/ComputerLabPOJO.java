@@ -14,6 +14,7 @@ public class ComputerLabPOJO {
     int id;
     private String address;
     private int capacity;
+    @Transient
     private int rest;
 
     public ComputerLabPOJO() {

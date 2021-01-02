@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,10 +42,7 @@ public class FileController {
         ParticipationPOJO participationPOJO = userService.findExpIdByStudentId(appointmentPOJOList.getStudentId());
         String expId = participationPOJO.getExp_id();
 
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
-                .path(fileName)
-                .toUriString();
+        String fileDownloadUri = "E:\\report\\" + fileName;
         fileService.SaveParticipation(studentId, expId, fileDownloadUri);
         logger.info("上传文件成功");
         return ResultFactory.buildSuccessResult_p("上传文件成功", new FilePropertiesPOJO(fileName, fileDownloadUri,

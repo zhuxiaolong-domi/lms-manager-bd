@@ -14,6 +14,8 @@ import java.util.List;
 public class ComputerLabService {
     @Autowired
     ComputerLabDAO computerlabDAO;
+
+    @Autowired
     SeatDAO seatDAO;
 
     /**

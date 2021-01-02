@@ -122,18 +122,6 @@ public class ExpController {
         return ResultFactory.buildSuccessResult("查找所有选择改实验的学生成功", service.findAllStudentSelected(expId));
     }
 
-    /**
-     * @Description: 处理下载实验报告请求
-     * @Param: studentId 选择该实验的学生的学号, expId 选择的实验编号
-     * @return:
-     * @Author: Liu ZhiTian
-     * @Date: 2020/12/27
-     */
-    @CrossOrigin
-    @RequestMapping("/api/teacher/downloadReport")
-    public Result downloadReport(String studentId, String expId) {
-        return ResultFactory.buildSuccessResult("查找实验报告成功", service.downloadReport(studentId, expId));
-    }
 
     /**
      * @Description: 录入成绩
@@ -156,25 +144,21 @@ public class ExpController {
 
     /**
     * @Description:  处理下载实验报告的请求
-    * @Param:  fileName 文件的名称
+    * @Param:  studentId 学生编号, expId 实验编号
     * @return:
     * @Author: Liu ZhiTian
     * @Date: 2020/12/30
     */
     @CrossOrigin
-    @RequestMapping("/api/teacher/download")
-    public void download(String fileName, HttpServletResponse response, HttpServletRequest request){
+    @RequestMapping("/api/teacher/downloadFile")
+    public void download(String studentId, String expId, HttpServletResponse response, HttpServletRequest request){
+        String fileName = service.downloadReport(studentId,expId);
         try {
-            if (!FileUtils.isValidFilename(fileName)) {
-                throw new Exception();
-            }
-            String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
-            String filePath = "D:\\lmsDownload\\download" + fileName; //这里的路径改为保存文件的路径
-
+            String filePath =fileName;
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader("Content-Disposition",
-                    "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, realFileName));
+                    "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, fileName));
             FileUtils.writeBytes(filePath, response.getOutputStream());
         } catch (Exception e) {
             e.printStackTrace();

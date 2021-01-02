@@ -14,6 +14,8 @@ import java.util.List;
 public class SeatService {
     @Autowired
     SeatDAO seatDAO;
+
+    @Autowired
     ComputerLabService computerLabService;
 
     /**
@@ -32,6 +34,7 @@ public class SeatService {
     public void addSeat(SeatPOJO seatPOJO, ComputerLabPOJO computerLabPOJO, int labId) {
 
         seatDAO.save(seatPOJO);
+        System.out.println(computerLabPOJO);
         computerLabPOJO.setCapacity(computerLabPOJO.getCapacity() + 1);
         computerLabService.updateRestNum(computerLabPOJO, labId, 1);
         seatDAO.save(seatPOJO);
