@@ -1,8 +1,8 @@
 package njust.lmsbackend.lms.Service;
 
 import njust.lmsbackend.lms.DAO.ParticipationDAO;
-import njust.lmsbackend.lms.DAO.UploadFileResponseDAO;
 import njust.lmsbackend.lms.Exception.FileException;
+import njust.lmsbackend.lms.POJO.FilePropertiesPOJO;
 import njust.lmsbackend.lms.POJO.ParticipationPOJO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -26,8 +26,8 @@ public class FileService {
     ParticipationDAO participationDAO;
 
     @Autowired
-    public FileService(UploadFileResponseDAO uploadFileResponseDAO) {
-        this.fileStorageLocation = Paths.get(uploadFileResponseDAO.getUploadDir()).toAbsolutePath().normalize();
+    public FileService(FilePropertiesPOJO filePropertiesPOJO) {
+        this.fileStorageLocation = Paths.get(filePropertiesPOJO.getUploadDir()).toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
         } catch (Exception ex) {
@@ -61,6 +61,10 @@ public class FileService {
         }
     }
 
+    public String fileDir() {
+        return this.fileStorageLocation.toString();
+    }
+
     /**
      * 加载文件
      *
@@ -83,6 +87,7 @@ public class FileService {
 
     public void SaveParticipation(String studentId, String expId, String report) {
         ParticipationPOJO participationPOJO = new ParticipationPOJO(studentId, expId, report);
-        participationDAO.save(participationPOJO);
+        participationDAO.updateReport(report, studentId, expId);
+        //participationDAO.save(participationPOJO);
     }
 }

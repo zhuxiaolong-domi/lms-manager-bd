@@ -105,7 +105,7 @@ public class ExpController {
     @RequestMapping("/api/teacher/enterScore")
     public Result enterScore(String studentId, String expId, Integer score) {
         String res = "";
-        if (service.enterScore(studentId, expId, score) == true) {
+        if (service.enterScore(studentId, expId, score)) {
             res = "录入成绩成功";
         } else {
             res = "录入成绩失败";

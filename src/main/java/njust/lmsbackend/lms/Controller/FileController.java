@@ -36,23 +36,20 @@ public class FileController {
     @PostMapping("/api/admin/uploadFile")
     public Result uploadFile(@RequestParam("file") MultipartFile file, @RequestParam String studentId) {
         String fileName = fileService.storeFile(file);
-        //String studentId = userPOJO.getId();
 
         AppointmentPOJO appointmentPOJOList = userService.queryAppointmentById(studentId);
         ParticipationPOJO participationPOJO = userService.findExpIdByStudentId(appointmentPOJOList.getStudentId());
         String expId = participationPOJO.getExp_id();
-
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
                 .path(fileName)
                 .toUriString();
         fileService.SaveParticipation(studentId, expId, fileDownloadUri);
+        logger.info("上传文件成功");
         return ResultFactory.buildSuccessResult_p("上传文件成功", new FilePropertiesPOJO(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize()));
-
+                file.getContentType(), file.getSize(), fileService.fileDir()));
     }
-
 
     /*@PostMapping("/api/admin/uploadMultipleFiles")
     public List<UploadFileResponseDAO> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
