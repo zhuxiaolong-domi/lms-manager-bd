@@ -83,7 +83,7 @@ public class ExpController {
     @CrossOrigin
     @RequestMapping("/api/teacher/deleteExp")
     public Result deleteExp(String expId) {
-        return (service.deleteExperiment(expId) == true) ? (ResultFactory.buildSuccessResult_p("删除实验成果", null)) : (ResultFactory.buildSuccessResult_p("删除失败", null));
+        return (service.deleteExperiment(expId)) ? (ResultFactory.buildSuccessResult_p("删除实验成果", null)) : (ResultFactory.buildSuccessResult_p("删除失败", null));
     }
 
     /**
