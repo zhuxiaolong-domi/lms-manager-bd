@@ -1,5 +1,4 @@
 package njust.lmsbackend.lms.Service;
-
 import njust.lmsbackend.lms.DAO.ComputerLabDAO;
 import njust.lmsbackend.lms.POJO.ComputerLabPOJO;
 import njust.lmsbackend.lms.DAO.SeatDAO;
@@ -14,16 +13,14 @@ import java.util.List;
 public class ComputerLabService {
     @Autowired
     ComputerLabDAO computerlabDAO;
-
     @Autowired
     SeatDAO seatDAO;
-
     /**
      * 返回所有的实验室 根据id
-     *
      * @return 实验室列表
      */
-    public List<ComputerLabPOJO> listAllLabs() {
+    public List<ComputerLabPOJO> listAllLabs()
+    {
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
         return computerlabDAO.findAll(sort);
     }
@@ -45,31 +42,27 @@ public class ComputerLabService {
     }
 
     /**
-     * 更新实验室可用机位数目
-     *
-     * @param computerLabPOJO
-     * @param labId
-     * @param changeNum
+     * 更新实验室总机位数目
      */
-    public void updateRestNum(ComputerLabPOJO computerLabPOJO, int labId, int changeNum) {
-        computerLabPOJO.setRest(seatDAO.updateCanUsedSeat(labId) + changeNum);
+    public  void updateCapacity(ComputerLabPOJO computerLabPOJO){
+        computerLabPOJO.setCapacity(computerlabDAO.newestCapacity(computerLabPOJO.getId()));
+        computerlabDAO.save(computerLabPOJO);
     }
 
+    /**
+     * 更新实验室可用机位数目
+     */
+    public  void updateRest(ComputerLabPOJO computerLabPOJO){
+        computerLabPOJO.setRest(computerlabDAO.newestRest(computerLabPOJO.getId()));
+        computerlabDAO.save(computerLabPOJO);
+    }
     /**
      * 查询指定实验室地址
-     *
-     * @param lab_id
+     * @param id
      * @return
      */
-    public ComputerLabPOJO findAddressByLabId(int lab_id) {
-        return computerlabDAO.findById(lab_id);
-    }
-
-    /**
-     * 查询指定实验室容量
-     */
-    public ComputerLabPOJO findCapacityByLabId(int lab_id) {
-        return computerlabDAO.findById(lab_id);
+    public ComputerLabPOJO findAddressByLabId(int id) {
+        return computerlabDAO.findComputerLabPOJOById(id);
     }
 
 }

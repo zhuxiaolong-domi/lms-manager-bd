@@ -92,7 +92,7 @@ public class UserService {
      * @param studentId 学生学号
      */
     public void withDrawById(String exp_id, String studentId) {
-        //ParticipitionPOJO withDrawParticipitionPOJO = new ParticipitionPOJO(exp_id, studentId);
+        //ParticipationPOJO withDrawParticipationPOJO = new ParticipationPOJO(exp_id, studentId);
         participationDAO.deleteByExpIdAndStudentId(exp_id, studentId);
     }
 
