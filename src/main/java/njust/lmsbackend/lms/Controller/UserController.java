@@ -36,11 +36,10 @@ public class UserController {
      * 列出所有学生用户
      *
      * @return 学生用户列表
-     * @throws Exception 异常
      */
     @CrossOrigin
     @GetMapping("/api/admin/student")
-    public Result listStudents() throws Exception {
+    public Result listStudents() {
         return ResultFactory.buildSuccessResult("查询用户成功", userService.listAllStudents());
     }
 
@@ -61,11 +60,10 @@ public class UserController {
      * 根据 id 删除用户操作
      *
      * @param userPOJO 用户对象
-     * @throws Exception 异常
      */
     @CrossOrigin
     @PostMapping("/api/admin/user/deleteUser")
-    public Result deleteUser(@RequestBody UserPOJO userPOJO) throws Exception {
+    public Result deleteUser(@RequestBody UserPOJO userPOJO) {
         userService.deleteById(userPOJO.getId());
         return ResultFactory.buildSuccessResult_p("删除成功", null);
     }
@@ -91,26 +89,26 @@ public class UserController {
     /**
      * 选择实验
      *
-     * @param participationExpPOJO 参与表-实验表 间接类
+     * @param expId 实验id, studentId 学生 id
      * @return 选择成功
      */
     @CrossOrigin
-    @PostMapping("/api/user/selectExp")
-    public Result selectExp(@RequestBody ParticipationExpPOJO participationExpPOJO) {
-        userService.selectExpById(participationExpPOJO.experimentPOJO.getId(), participationExpPOJO.userPOJO.getId());
+    @GetMapping("/api/user/selectExp")
+    public Result selectExp(String expId, String studentId) {
+        userService.selectExpById(expId, studentId);
         return ResultFactory.buildSuccessResult_p("选择实验成功", null);
     }
 
     /**
      * 退选实验
      *
-     * @param participationExpPOJO 参与和实验的中间类
+     * @param expId 实验id， studentId学生id
      * @return 退选实验成功
      */
     @CrossOrigin
-    @PostMapping("/api/user/withdrawExp")
-    public Result withDrawExp(@RequestBody ParticipationExpPOJO participationExpPOJO) {
-        userService.withDrawById(participationExpPOJO.experimentPOJO.getId(), participationExpPOJO.userPOJO.getId());
+    @GetMapping("/api/user/withdrawExp")
+    public Result withDrawExp(String expId, String studentId) {
+        userService.withDrawById(expId, studentId);
         return ResultFactory.buildSuccessResult_p("退选实验成功", null);
     }
 
@@ -123,7 +121,7 @@ public class UserController {
     @CrossOrigin
     @PostMapping("/api/user/queryScore")
     public Result queryScore(@RequestBody UserPOJO userPOJO) {
-        return ResultFactory.buildSuccessResult("查询所有实验成绩成功", userService.findParticipationPOJOSBySID(userPOJO.getId()));
+        return ResultFactory.buildSuccessResult_p("查询所有成绩成功", userService.findExpByStudentId(userPOJO.getId()).getScore());
     }
 
     /**
@@ -185,5 +183,4 @@ public class UserController {
             return ResultFactory.buildFailResult("没有参与实验");
         }
     }
-
 }

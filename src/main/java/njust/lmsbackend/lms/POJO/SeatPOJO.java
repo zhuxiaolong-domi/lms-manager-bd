@@ -15,8 +15,8 @@ public class SeatPOJO {
     @Column(name = "seat_id")
     private int seatId;
 
-    @Column(name="lab_id")
-    private  int labId;
+    @Column(name = "lab_id")
+    private int labId;
     private int state;
 
     public SeatPOJO() {

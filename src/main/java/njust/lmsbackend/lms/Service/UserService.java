@@ -135,7 +135,7 @@ public class UserService {
     * @Date: 2021/1/3
     */
     public List<ParticipationPOJO> findParticipationPOJOSBySID(String studentId){
-        List<ParticipationPOJO> participationPOJOList = participationDAO.findParticipationPOJOSByStudentId(studentId);
+        List<ParticipationPOJO> participationPOJOList = participationDAO.findAllByStudentId(studentId);
         for(var participation : participationPOJOList){
             System.out.println(participation.getExp_id());
             participation.setExpName(experimentDAO.findByExpId(participation.getExp_id()).getName());
@@ -145,6 +145,7 @@ public class UserService {
 
     /**
      * 根据用户id查询用户信息
+     *
      * @param id 用户 id
      * @return 返回此id的用户对象
      */

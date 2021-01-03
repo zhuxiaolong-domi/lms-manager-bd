@@ -24,5 +24,5 @@ public interface ComputerLabDAO extends JpaRepository<ComputerLabPOJO, Integer> 
     @Modifying
     @Transactional
     @Query(value = "update tb_computerlab set capacity=?1 where id=?2", nativeQuery = true)
-    void updateCapacity(int capacity,int lab_id);
+    void updateCapacity(int capacity, int lab_id);
 }

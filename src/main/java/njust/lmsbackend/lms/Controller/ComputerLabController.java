@@ -45,6 +45,7 @@ public class ComputerLabController {
 
     /**
      * 删除现有实验室
+     *
      * @param computerLabPOJO 实验室对象
      * @throws Exception 异常
      */
@@ -59,6 +60,7 @@ public class ComputerLabController {
 
     /**
      * 更改机房信息
+     *
      * @param computerLabPOJO 机房对象
      * @return 修改成功信息
      */
@@ -77,9 +79,8 @@ public class ComputerLabController {
      */
     @CrossOrigin
     @GetMapping("/api/lab/time")
-    public Date getRecentTime(){
-        Date date=new Date();
-        return date;
+    public Date getRecentTime() {
+        return new Date();
     }
 
 }
