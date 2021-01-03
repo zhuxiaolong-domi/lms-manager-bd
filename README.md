@@ -5,7 +5,9 @@
 ### 拉下项目配置maven即可启动，测试程序在Controller中的HelloController中。运行**LmsApplication**即可。
 
 ### application.properties需要添加的东西
-```## MULTIPART (MultipartProperties)
+
+```
+## MULTIPART (MultipartProperties)
 # 开启 multipart 上传功能
 spring.servlet.multipart.enabled=true
 # 文件写入磁盘的阈值
@@ -17,4 +19,5 @@ spring.servlet.multipart.max-request-size=215MB
 
 ## 文件存储所需参数
 # 所有通过 REST APIs 上传的文件都将存储在此目录下
-file.upload-dir=E:\\report```
+file.upload-dir=E:\\report
+```

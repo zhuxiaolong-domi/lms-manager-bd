@@ -14,7 +14,7 @@ public class ParticipationPOJO {
 
     @Column(name = "exp_id")
     String expId;
-    private int score;
+    private int score = 0;
     private String report;
 
     public ParticipationPOJO() {

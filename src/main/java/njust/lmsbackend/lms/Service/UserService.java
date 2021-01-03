@@ -132,11 +132,16 @@ public class UserService {
      * @param studentId 学生 ID
      * @return ParticipationPOJO 对象
      */
-    public ParticipationPOJO findExpIdByStudentId(String studentId) {
+    public ParticipationPOJO findExpByStudentId(String studentId) {
         return participationDAO.findByStudentId(studentId);
     }
 
-    public UserPOJO findPwdById(String id) {
+    /**
+     * 根据用户id查询用户信息
+     * @param id 用户 id
+     * @return 返回此id的用户对象
+     */
+    public UserPOJO findUserById(String id) {
         return userDAO.findUserPOJOById(id);
     }
 }

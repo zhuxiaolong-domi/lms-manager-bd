@@ -146,25 +146,46 @@ public class UserController {
      * 查询所有已经预约实验的信息
      *
      * @param userPOJO 学生对象
-     * @return 查询出的所有符合的信息列表
+     * @return 成功:查询出的所有符合的信息列表 失败:"没有已预约实验"
      */
     @CrossOrigin
     @PostMapping("/api/user/queryAppointment")
     public Result queryAppointment(@RequestBody UserPOJO userPOJO) {
-        AppointmentPOJO appointmentPOJOList = userService.queryAppointmentById(userPOJO.getId());
-        System.out.println(appointmentPOJOList.getLabId());
+        AppointmentPOJO appointmentPOJO = userService.queryAppointmentById(userPOJO.getId());
+        if (appointmentPOJO != null) {
+            System.out.println(appointmentPOJO.getLabId());
 
-        ComputerLabPOJO computerLabPOJO = computerLabService.findAddressByLabId(appointmentPOJOList.getLabId());
-        System.out.println(computerLabPOJO.getId());
-        appointmentPOJOList.setAddress(computerLabPOJO.getAddress());
+            ComputerLabPOJO computerLabPOJO = computerLabService.findAddressByLabId(appointmentPOJO.getLabId());
+            System.out.println(computerLabPOJO.getId());
+            appointmentPOJO.setAddress(computerLabPOJO.getAddress());
 
-        ParticipationPOJO participationPOJO = userService.findExpIdByStudentId(appointmentPOJOList.getStudentId());
-        appointmentPOJOList.setTeacherName(experimentService.findTeacherByExp(participationPOJO.getExp_id()).getName());
+            ParticipationPOJO participationPOJO = userService.findExpByStudentId(appointmentPOJO.getStudentId());
+            appointmentPOJO.setTeacherName(experimentService.findTeacherByExp(participationPOJO.getExp_id()).getName());
 
-        ExperimentPOJO experimentPOJO = experimentService.findExpNameById(participationPOJO.getExp_id());
-        appointmentPOJOList.setExpName(experimentPOJO.getName());
+            ExperimentPOJO experimentPOJO = experimentService.findExpNameById(participationPOJO.getExp_id());
+            appointmentPOJO.setExpName(experimentPOJO.getName());
 
-        return ResultFactory.buildSuccessResult_p("查询所有已预约实验信息成功", appointmentPOJOList);
+            return ResultFactory.buildSuccessResult_p("查询所有已预约实验信息成功", appointmentPOJO);
+        } else {
+            return ResultFactory.buildFailResult("没有已预约实验");
+        }
+    }
+
+    /**
+     * 查询学生个人实验信息
+     *
+     * @param userPOJO 用户类
+     * @return 成功:参与的实验信息 失败:"没有参与实验"
+     */
+    @CrossOrigin
+    @PostMapping("/api/user/queryExp")
+    public Result queryExp(@RequestBody UserPOJO userPOJO) {
+        ParticipationPOJO participationPOJO = userService.findExpByStudentId(userPOJO.getId());
+        if (participationPOJO != null) {
+            return ResultFactory.buildSuccessResult_p("查询实验信息成功", participationPOJO);
+        } else {
+            return ResultFactory.buildFailResult("没有参与实验");
+        }
     }
 
 }

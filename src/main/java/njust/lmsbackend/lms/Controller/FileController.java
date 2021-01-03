@@ -39,7 +39,7 @@ public class FileController {
         String fileName = fileService.storeFile(file);
 
         AppointmentPOJO appointmentPOJOList = userService.queryAppointmentById(studentId);
-        ParticipationPOJO participationPOJO = userService.findExpIdByStudentId(appointmentPOJOList.getStudentId());
+        ParticipationPOJO participationPOJO = userService.findExpByStudentId(appointmentPOJOList.getStudentId());
         String expId = participationPOJO.getExp_id();
 
         String fileDownloadUri = "E:\\report\\" + fileName;
