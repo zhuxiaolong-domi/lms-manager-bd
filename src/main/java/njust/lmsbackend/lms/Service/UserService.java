@@ -112,8 +112,8 @@ public class UserService {
      * @param studentId 学生学号
      * @return 查询出的所有符合的信息列表
      */
-    public AppointmentPOJO queryAppointmentById(String studentId) {
-        return appointmentDAO.findByStudentId(studentId);
+    public List<AppointmentPOJO> queryAppointmentsById(String studentId) {
+        return appointmentDAO.findAppointmentPOJOSByStudentId(studentId);
     }
 
     /**
@@ -124,6 +124,23 @@ public class UserService {
      */
     public ParticipationPOJO findExpByStudentId(String studentId) {
         return participationDAO.findByStudentId(studentId);
+    }
+
+
+    /**
+    * @Description: 根据学生ID 查询所有的参与对象
+    * @Param:  studentId 学生ID
+    * @return:   ParticipationPOJO对象数组
+    * @Author: Liu ZhiTian
+    * @Date: 2021/1/3
+    */
+    public List<ParticipationPOJO> findParticipationPOJOSBySID(String studentId){
+        List<ParticipationPOJO> participationPOJOList = participationDAO.findParticipationPOJOSByStudentId(studentId);
+        for(var participation : participationPOJOList){
+            System.out.println(participation.getExp_id());
+            participation.setExpName(experimentDAO.findByExpId(participation.getExp_id()).getName());
+        }
+        return participationPOJOList;
     }
 
     /**

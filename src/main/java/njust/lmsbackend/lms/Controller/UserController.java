@@ -123,7 +123,7 @@ public class UserController {
     @CrossOrigin
     @PostMapping("/api/user/queryScore")
     public Result queryScore(@RequestBody UserPOJO userPOJO) {
-        return ResultFactory.buildSuccessResult_p("查询所有成绩成功", userService.findExpByStudentId(userPOJO.getId()).getScore());
+        return ResultFactory.buildSuccessResult("查询所有实验成绩成功", userService.findParticipationPOJOSBySID(userPOJO.getId()));
     }
 
     /**
@@ -151,20 +151,18 @@ public class UserController {
     @CrossOrigin
     @PostMapping("/api/user/queryAppointment")
     public Result queryAppointment(@RequestBody UserPOJO userPOJO) {
-        AppointmentPOJO appointmentPOJO = userService.queryAppointmentById(userPOJO.getId());
-        if (appointmentPOJO != null) {
-            System.out.println(appointmentPOJO.getLabId());
+        List<AppointmentPOJO> appointmentPOJO = userService.queryAppointmentsById(userPOJO.getId());
+        if (appointmentPOJO != null && appointmentPOJO.size() > 0) {
+            for(var appointment : appointmentPOJO){
+                ComputerLabPOJO computerLabPOJO = computerLabService.findAddressByLabId(appointment.getLabId());
+                appointment.setAddress(computerLabPOJO.getAddress());
 
-            ComputerLabPOJO computerLabPOJO = computerLabService.findAddressByLabId(appointmentPOJO.getLabId());
-            System.out.println(computerLabPOJO.getId());
-            appointmentPOJO.setAddress(computerLabPOJO.getAddress());
+                ParticipationPOJO participationPOJO = userService.findExpByStudentId(appointment.getStudentId());
+                appointment.setTeacherName(experimentService.findTeacherByExp(participationPOJO.getExp_id()).getName());
 
-            ParticipationPOJO participationPOJO = userService.findExpByStudentId(appointmentPOJO.getStudentId());
-            appointmentPOJO.setTeacherName(experimentService.findTeacherByExp(participationPOJO.getExp_id()).getName());
-
-            ExperimentPOJO experimentPOJO = experimentService.findExpNameById(participationPOJO.getExp_id());
-            appointmentPOJO.setExpName(experimentPOJO.getName());
-
+                ExperimentPOJO experimentPOJO = experimentService.findExpNameById(participationPOJO.getExp_id());
+                appointment.setExpName(experimentPOJO.getName());
+            }
             return ResultFactory.buildSuccessResult_p("查询所有已预约实验信息成功", appointmentPOJO);
         } else {
             return ResultFactory.buildFailResult("没有已预约实验");
@@ -180,7 +178,7 @@ public class UserController {
     @CrossOrigin
     @PostMapping("/api/user/queryExp")
     public Result queryExp(@RequestBody UserPOJO userPOJO) {
-        ParticipationPOJO participationPOJO = userService.findExpByStudentId(userPOJO.getId());
+        List<ParticipationPOJO> participationPOJO = userService.findParticipationPOJOSBySID(userPOJO.getId());
         if (participationPOJO != null) {
             return ResultFactory.buildSuccessResult_p("查询实验信息成功", participationPOJO);
         } else {

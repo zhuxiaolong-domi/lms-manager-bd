@@ -11,5 +11,5 @@ public interface AppointmentDAO extends JpaRepository<AppointmentPOJO, String> {
 
     //List<AppointmentPOJO> findAllByStudentId(String studentId);
 
-    AppointmentPOJO findByStudentId(String studentId);
+    List<AppointmentPOJO> findAppointmentPOJOSByStudentId(String studentId);
 }
