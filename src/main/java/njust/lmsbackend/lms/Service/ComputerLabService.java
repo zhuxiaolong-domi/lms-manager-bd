@@ -14,6 +14,7 @@ import java.util.List;
 public class ComputerLabService {
     @Autowired
     ComputerLabDAO computerlabDAO;
+    @Autowired
     SeatDAO seatDAO;
 
     /**
@@ -56,11 +57,12 @@ public class ComputerLabService {
     /**
      * 查询指定实验室地址
      *
-     * @param lab_id
+     * @param labId
      * @return
      */
-    public ComputerLabPOJO findAddressByLabId(int lab_id) {
-        return computerlabDAO.findById(lab_id);
+    public ComputerLabPOJO findAddressByLabId(int labId) {
+        System.out.println(labId + "labid");
+        return computerlabDAO.findById(labId);
     }
 
     /**

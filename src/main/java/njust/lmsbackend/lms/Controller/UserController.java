@@ -152,8 +152,10 @@ public class UserController {
     @PostMapping("/api/user/queryAppointment")
     public Result queryAppointment(@RequestBody UserPOJO userPOJO) {
         AppointmentPOJO appointmentPOJOList = userService.queryAppointmentById(userPOJO.getId());
+        System.out.println(appointmentPOJOList.getLabId());
 
-        ComputerLabPOJO computerLabPOJO = computerLabService.findAddressByLabId(appointmentPOJOList.getLab_id());
+        ComputerLabPOJO computerLabPOJO = computerLabService.findAddressByLabId(appointmentPOJOList.getLabId());
+        System.out.println(computerLabPOJO.getId());
         appointmentPOJOList.setAddress(computerLabPOJO.getAddress());
 
         ParticipationPOJO participationPOJO = userService.findExpIdByStudentId(appointmentPOJOList.getStudentId());
