@@ -97,16 +97,6 @@ public class UserService {
     }
 
     /**
-     * 根据学号查询所有成绩
-     *
-     * @param studentId 学生学号
-     * @return 查询出的成绩列表
-     */
-    public List<ParticipationPOJO> queryAllScoreById(String studentId) {
-        return participationDAO.findAllByStudentId(studentId);
-    }
-
-    /**
      * 根据关键词查找
      *
      * @param keywords 关键词
@@ -127,7 +117,7 @@ public class UserService {
     }
 
     /**
-     * 根据学生 ID 查询 实验 ID
+     * 根据学生 ID 查询 实验对象
      *
      * @param studentId 学生 ID
      * @return ParticipationPOJO 对象

@@ -122,8 +122,8 @@ public class UserController {
      */
     @CrossOrigin
     @PostMapping("/api/user/queryScore")
-    public Result queryAllScore(@RequestBody UserPOJO userPOJO) {
-        return ResultFactory.buildSuccessResult_p("查询所有成绩成功", userService.queryAllScoreById(userPOJO.getId()));
+    public Result queryScore(@RequestBody UserPOJO userPOJO) {
+        return ResultFactory.buildSuccessResult_p("查询所有成绩成功", userService.findExpByStudentId(userPOJO.getId()).getScore());
     }
 
     /**
