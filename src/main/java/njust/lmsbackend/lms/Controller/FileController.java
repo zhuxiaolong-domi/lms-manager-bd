@@ -19,8 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,12 +42,8 @@ public class FileController {
         ParticipationPOJO participationPOJO = userService.findExpIdByStudentId(appointmentPOJOList.getStudentId());
         String expId = participationPOJO.getExp_id();
 
-        String fileDownloadUri = null;
-        fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
-                .path(new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8))
-                .toUriString();
-        fileService.SaveParticipation(studentId, expId, fileName);
+        String fileDownloadUri = "E:\\report\\" + fileName;
+        fileService.SaveParticipation(studentId, expId, fileDownloadUri);
         logger.info("上传文件成功");
         return ResultFactory.buildSuccessResult_p("上传文件成功", new FilePropertiesPOJO(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize(), fileService.fileDir()));

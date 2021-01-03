@@ -25,6 +25,7 @@ public class FileService {
     @Autowired
     ParticipationDAO participationDAO;
 
+
     @Autowired
     public FileService(FilePropertiesPOJO filePropertiesPOJO) {
         this.fileStorageLocation = Paths.get(filePropertiesPOJO.getUploadDir()).toAbsolutePath().normalize();
@@ -34,6 +35,8 @@ public class FileService {
             throw new FileException("Could not create the directory where the uploaded files will be stored.", ex);
         }
     }
+
+
 
     /**
      * 存储文件到系统
@@ -50,7 +53,6 @@ public class FileService {
             if (fileName.contains("..")) {
                 throw new FileException("Sorry! Filename contains invalid path sequence " + fileName);
             }
-
             // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
