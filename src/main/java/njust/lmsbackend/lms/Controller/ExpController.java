@@ -18,18 +18,18 @@ import java.util.List;
 public class ExpController {
     @Autowired
     private ExperimentService service;
-    
-    /** 
-    * @Description: 教师查询所有创建的实验 
-    * @Param:  teacherId 教师的工号
-    * @return:  
-    * @Author: Liu ZhiTian 
-    * @Date: 2020/12/30 
-    */
+
+    /**
+     * @Description: 教师查询所有创建的实验
+     * @Param: teacherId 教师的工号
+     * @return:
+     * @Author: Liu ZhiTian
+     * @Date: 2020/12/30
+     */
     @CrossOrigin
     @RequestMapping("/api/teacher/allExp")
-    public Result allExp(String teacherId){
-        return ResultFactory.buildSuccessResult("查找成功",service.queryAllExpByTeacher(teacherId));
+    public Result allExp(String teacherId) {
+        return ResultFactory.buildSuccessResult("查找成功", service.queryAllExpByTeacher(teacherId));
     }
 
     /**
@@ -87,25 +87,25 @@ public class ExpController {
     }
 
     /**
-    * @Description: 批量删除已发布的实验
-    * @Param:  allExpId 所有要删除的实验编号，按照如下格式"1:2:3:4" , teacherId 教师工号
-    * @return:  删除后教师所有的实验
-    * @Author: Liu ZhiTian
-    * @Date: 2020/12/30
-    */
+     * @Description: 批量删除已发布的实验
+     * @Param: allExpId 所有要删除的实验编号，按照如下格式"1:2:3:4" , teacherId 教师工号
+     * @return: 删除后教师所有的实验
+     * @Author: Liu ZhiTian
+     * @Date: 2020/12/30
+     */
     @CrossOrigin
     @RequestMapping("/api/teacher/batchDeleteExp")
-    public Result batchDeleteExp(String allExpId, String teacherId){
+    public Result batchDeleteExp(String allExpId, String teacherId) {
         String[] ids = allExpId.split(":");
         List<ExperimentPOJO> experiments = null;
         String msg = "";
-        if(service.batchDeleteExperiment(ids)){
+        if (service.batchDeleteExperiment(ids)) {
             msg = "批量删除成功！";
             experiments = service.queryAllExpByTeacher(teacherId);
-        }else{
+        } else {
             msg = "批量删除失败";
         }
-        return ResultFactory.buildSuccessResult(msg,experiments);
+        return ResultFactory.buildSuccessResult(msg, experiments);
     }
 
 
@@ -143,18 +143,18 @@ public class ExpController {
     }
 
     /**
-    * @Description:  处理下载实验报告的请求
-    * @Param:  studentId 学生编号, expId 实验编号
-    * @return:
-    * @Author: Liu ZhiTian
-    * @Date: 2020/12/30
-    */
+     * @Description: 处理下载实验报告的请求
+     * @Param: studentId 学生编号, expId 实验编号
+     * @return:
+     * @Author: Liu ZhiTian
+     * @Date: 2020/12/30
+     */
     @CrossOrigin
     @RequestMapping("/api/teacher/downloadFile")
-    public void download(String studentId, String expId, HttpServletResponse response, HttpServletRequest request){
-        String fileName = service.downloadReport(studentId,expId);
+    public void download(String studentId, String expId, HttpServletResponse response, HttpServletRequest request) {
+        String fileName = service.downloadReport(studentId, expId);
         try {
-            String filePath =fileName;
+            String filePath = fileName;
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader("Content-Disposition",

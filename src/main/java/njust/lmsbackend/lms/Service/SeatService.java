@@ -1,9 +1,8 @@
 package njust.lmsbackend.lms.Service;
-
 import njust.lmsbackend.lms.DAO.SeatDAO;
 import njust.lmsbackend.lms.POJO.SeatPOJO;
-import njust.lmsbackend.lms.POJO.ComputerLabPOJO;
-import njust.lmsbackend.lms.Service.ComputerLabService;
+import  njust.lmsbackend.lms.POJO.ComputerLabPOJO;
+import njust.lmsbackend.lms.DAO.ComputerLabDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -14,54 +13,56 @@ import java.util.List;
 public class SeatService {
     @Autowired
     SeatDAO seatDAO;
-
     @Autowired
-    ComputerLabService computerLabService;
+    ComputerLabDAO computerLabDAO;
 
     /**
-     * 根据机位和实验室id返回机位具体信息
-     *
+     * 返回存在的所有机位具体信息
      * @return 机位列表
      */
-    public List<SeatPOJO> listAllSeats() {
-        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+    public List<SeatPOJO> listAllSeats()
+    {
+        Sort sort = Sort.by(Sort.Direction.ASC, "labId");
         return seatDAO.findAll(sort);
     }
 
     /**
-     * @param seatPOJO 添加机位对象
+     * 根据id返回指定实验室的所有机位信息
      */
-    public void addSeat(SeatPOJO seatPOJO, ComputerLabPOJO computerLabPOJO, int labId) {
-
-        seatDAO.save(seatPOJO);
-        System.out.println(computerLabPOJO);
-        computerLabPOJO.setCapacity(computerLabPOJO.getCapacity() + 1);
-        computerLabService.updateRestNum(computerLabPOJO, labId, 1);
-        seatDAO.save(seatPOJO);
+    public List<SeatPOJO> listSeats(int labId){
+        return seatDAO.findSeatPOJOByLabId(labId);
     }
 
     /**
-     * 根据实验室号和机号删除机位
+     * 添加新机位并更新实验室容量
+     * @param seatPOJO 机位对象
      */
-    public void deleteSeat(ComputerLabPOJO computerLabPOJO, SeatPOJO seatPOJO, int labId, int seatId, int deleteNum) {
-        seatDAO.deleteSeatPOJOByLabIdAndSeatId(labId, seatId);
-        computerLabPOJO.setCapacity(computerLabPOJO.getCapacity() - deleteNum);
-        computerLabService.updateRestNum(computerLabPOJO, labId, -deleteNum);
+    public void addSeat(SeatPOJO seatPOJO,ComputerLabPOJO computerLabPOJO) {
         seatDAO.save(seatPOJO);
+        int newCapacity=computerLabDAO.newestCapacity(computerLabPOJO.getId());
+        computerLabDAO.updateCapacity(newCapacity,computerLabPOJO.getId());
+    }
+
+    /**
+     * 删除机位并更新实验室容量
+     * @param seatPOJO 机位对象
+     */
+    public void deleteSeat(SeatPOJO seatPOJO,ComputerLabPOJO computerLabPOJO) {
+        seatDAO.delete(seatPOJO);
+        int newCapacity=computerLabDAO.newestCapacity(computerLabPOJO.getId());
+        computerLabDAO.updateCapacity(newCapacity,computerLabPOJO.getId());
     }
 
     /**
      * 更改当前机位状态
      */
-    public void changeSeatState(ComputerLabPOJO computerLabPOJO, SeatPOJO seatPOJO, int labId) {
-        if (seatPOJO.getState() == 1) {
+    public void changeSeatState(SeatPOJO seatPOJO) {
+        if(seatPOJO.getState()==1){
             seatPOJO.setState(0);
-            computerLabService.updateRestNum(computerLabPOJO, labId, -1);
-        } else {
-            seatPOJO.setState(1);
-            computerLabService.updateRestNum(computerLabPOJO, labId, 1);
         }
-
+        else{
+            seatPOJO.setState(1);
+        }
         seatDAO.save(seatPOJO);
     }
 }

@@ -9,7 +9,6 @@ import javax.persistence.*;
 @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 public class ComputerLabPOJO {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     int id;
     private String address;
@@ -51,13 +50,7 @@ public class ComputerLabPOJO {
         this.capacity = capacity;
     }
 
-    public int getRest() {
-        return rest;
-    }
+    public void setRest(int rest){this.rest=rest;}
 
-    public void setRest(int rest) {
-        this.rest = rest;
-    }
-
-
+    public int getRest(){return rest;}
 }

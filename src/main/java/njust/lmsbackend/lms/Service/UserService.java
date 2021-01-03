@@ -92,18 +92,8 @@ public class UserService {
      * @param studentId 学生学号
      */
     public void withDrawById(String exp_id, String studentId) {
-        //ParticipitionPOJO withDrawParticipitionPOJO = new ParticipitionPOJO(exp_id, studentId);
+        //ParticipationPOJO withDrawParticipationPOJO = new ParticipationPOJO(exp_id, studentId);
         participationDAO.deleteByExpIdAndStudentId(exp_id, studentId);
-    }
-
-    /**
-     * 根据学号查询所有成绩
-     *
-     * @param studentId 学生学号
-     * @return 查询出的成绩列表
-     */
-    public List<ParticipationPOJO> queryAllScoreById(String studentId) {
-        return participationDAO.findAllByStudentId(studentId);
     }
 
     /**
@@ -127,16 +117,21 @@ public class UserService {
     }
 
     /**
-     * 根据学生 ID 查询 实验 ID
+     * 根据学生 ID 查询 实验对象
      *
      * @param studentId 学生 ID
      * @return ParticipationPOJO 对象
      */
-    public ParticipationPOJO findExpIdByStudentId(String studentId) {
+    public ParticipationPOJO findExpByStudentId(String studentId) {
         return participationDAO.findByStudentId(studentId);
     }
 
-    public UserPOJO findPwdById(String id) {
+    /**
+     * 根据用户id查询用户信息
+     * @param id 用户 id
+     * @return 返回此id的用户对象
+     */
+    public UserPOJO findUserById(String id) {
         return userDAO.findUserPOJOById(id);
     }
 }

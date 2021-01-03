@@ -12,7 +12,8 @@ public class AppointmentPOJO {
     @Column(name = "student_id")
     String studentId;
 
-    private int lab_id;
+    @Column(name = "lab_id")
+    private int labId;
     private int seat_id;
     /**
      * 时间段
@@ -36,9 +37,9 @@ public class AppointmentPOJO {
     public AppointmentPOJO() {
     }
 
-    public AppointmentPOJO(String studentId, int lab_id, int seat_id, int time, String teacherName, String address, String expName) {
+    public AppointmentPOJO(String studentId, int labId, int seat_id, int time, String teacherName, String address, String expName) {
         this.studentId = studentId;
-        this.lab_id = lab_id;
+        this.labId = labId;
         this.seat_id = seat_id;
         this.time = time;
         this.teacherName = teacherName;
@@ -78,12 +79,12 @@ public class AppointmentPOJO {
         this.studentId = student_id;
     }
 
-    public int getLab_id() {
-        return lab_id;
+    public int getLabId() {
+        return labId;
     }
 
-    public void setLab_id(int lab_id) {
-        this.lab_id = lab_id;
+    public void setLab_id(int labId) {
+        this.labId = labId;
     }
 
     public int getSeat_id() {

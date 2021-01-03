@@ -65,9 +65,9 @@ public class ExperimentService {
     }
 
     /*4.批量删除已发布的实验*/
-    public boolean batchDeleteExperiment(String[] ids){
+    public boolean batchDeleteExperiment(String[] ids) {
         boolean flag = true;
-        for(var expId : ids){
+        for (var expId : ids) {
             flag = this.deleteExperiment(expId);
         }
 
@@ -75,20 +75,19 @@ public class ExperimentService {
     }
 
     /*5.根据老师工号查找所有的实验*/
-    public List<ExperimentPOJO> queryAllExpByTeacher(String teacherId){
+    public List<ExperimentPOJO> queryAllExpByTeacher(String teacherId) {
         List<ExperimentPOJO> list = new LinkedList<>();
-        if(teacherId == null || !userDAO.findById(teacherId).isPresent()){
+        if (teacherId == null || !userDAO.findById(teacherId).isPresent()) {
             return null;
         }
         UserPOJO teacher = userDAO.findUserPOJOById(teacherId);
-        for(var tmp:startExpDAO.findStartExpPOJOSByTeacherId(teacherId)){
+        for (var tmp : startExpDAO.findStartExpPOJOSByTeacherId(teacherId)) {
             var exp = experimentDAO.findByExpId(tmp.getExpId());
             exp.setTeacherName(teacher.getName());
             list.add(exp);
         }
         return list;
     }
-
 
 
     /*根据实验查找创建的老师*/

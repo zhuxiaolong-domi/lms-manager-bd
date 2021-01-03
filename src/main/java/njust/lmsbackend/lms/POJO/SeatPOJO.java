@@ -13,10 +13,11 @@ import javax.persistence.Table;
 public class SeatPOJO {
     @Id
     @Column(name = "seat_id")
-    int seatId;
+    private int seatId;
 
-    int labId;
-    int state;
+    @Column(name="lab_id")
+    private  int labId;
+    private int state;
 
     public SeatPOJO() {
     }

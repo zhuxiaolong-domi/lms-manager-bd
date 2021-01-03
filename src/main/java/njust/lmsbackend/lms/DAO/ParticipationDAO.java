@@ -15,8 +15,6 @@ public interface ParticipationDAO extends JpaRepository<ParticipationPOJO, Strin
     @Transactional
     void deleteByExpIdAndStudentId(String ExpId, String studentId);
 
-    List<ParticipationPOJO> findAllByStudentId(String studentId);
-
     Integer deleteParticipationPOJOByExpId(String expId);
 
     List<ParticipationPOJO> findAllByExpId(String expId);
