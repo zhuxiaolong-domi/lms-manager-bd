@@ -17,4 +17,4 @@ spring.servlet.multipart.max-request-size=215MB
 
 ## 文件存储所需参数
 # 所有通过 REST APIs 上传的文件都将存储在此目录下
-file.upload-dir=F:\\report```
+file.upload-dir=E:\\report```
