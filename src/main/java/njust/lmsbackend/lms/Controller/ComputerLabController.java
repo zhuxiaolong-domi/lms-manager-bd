@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @RestController
 public class ComputerLabController {
     @Autowired
@@ -66,6 +68,18 @@ public class ComputerLabController {
     @PostMapping("/api/lab/update")
     public Result updateLabs(@RequestBody ComputerLabPOJO computerLabPOJO) {
         computerlabService.updateCapacity(computerLabPOJO);
+        computerlabService.updateRest(computerLabPOJO);
         return ResultFactory.buildSuccessResult_p("修改成功", null);
     }
+
+    /**
+     * 获取当时的时间
+     */
+    @CrossOrigin
+    @GetMapping("/api/lab/time")
+    public Date getRecentTime(){
+        Date date=new Date();
+        return date;
+    }
+
 }

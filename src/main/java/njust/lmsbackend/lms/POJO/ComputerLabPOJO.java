@@ -14,6 +14,8 @@ public class ComputerLabPOJO {
     int id;
     private String address;
     private int capacity;
+    @Transient
+    private int rest;
     public ComputerLabPOJO() {
     }
 
@@ -21,6 +23,7 @@ public class ComputerLabPOJO {
         this.id = id;
         this.address = address;
         this.capacity = capacity;
+        this.rest=rest;
     }
 
     public int getId() {
@@ -47,5 +50,7 @@ public class ComputerLabPOJO {
         this.capacity = capacity;
     }
 
+    public void setRest(int rest){this.rest=rest;}
 
+    public int getRest(){return rest;}
 }

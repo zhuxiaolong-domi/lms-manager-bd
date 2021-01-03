@@ -1,11 +1,13 @@
 package njust.lmsbackend.lms.Controller;
 import njust.lmsbackend.lms.Result.ResultFactory;
-import njust.lmsbackend.lms.POJO.ComputerLabPOJO;
 import njust.lmsbackend.lms.POJO.SeatPOJO;
+import njust.lmsbackend.lms.POJO.ComputerLabPOJO;
 import njust.lmsbackend.lms.Result.Result;
 import njust.lmsbackend.lms.Service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 public class SeatController {
@@ -25,8 +27,18 @@ public class SeatController {
     }
 
     /**
+     * 列出指定实验室的机位信息
+     */
+    @CrossOrigin
+    @GetMapping("/api/seat/labId")
+    public Result listSeatsByLabId(int labId) throws Exception{
+        return ResultFactory.buildSuccessResult("查询指定实验室机位成功",seatService.listSeats(labId));
+    }
+
+    /**
      * 添加新机位
      * @param seatPOJO 机位对象
+     * @param computerLabPOJO 实验室对象
      */
     @CrossOrigin
     @PostMapping("/api/seat/add")
@@ -50,6 +62,7 @@ public class SeatController {
     /**
      * 根据id删除现有机位
      * @param seatPOJO 机位对象
+     * @param computerLabPOJO 实验室对象
      */
     @CrossOrigin
     @PostMapping("/api/seat/delete")
@@ -58,4 +71,13 @@ public class SeatController {
         return ResultFactory.buildSuccessResult_p("删除成功", null);
     }
 
+    /**
+     * 获取当时的时间
+     */
+    @CrossOrigin
+    @GetMapping("/api/seat/time")
+    public Date getRecentTime(){
+        Date date=new Date();
+        return date;
+    }
 }

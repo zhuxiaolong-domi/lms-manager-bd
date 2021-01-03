@@ -13,6 +13,7 @@ import java.util.List;
 public class ComputerLabService {
     @Autowired
     ComputerLabDAO computerlabDAO;
+    @Autowired
     SeatDAO seatDAO;
     /**
      * 返回所有的实验室 根据id
@@ -41,10 +42,19 @@ public class ComputerLabService {
     }
 
     /**
-     * 更新实验室可用机位数目
+     * 更新实验室总机位数目
      */
     public  void updateCapacity(ComputerLabPOJO computerLabPOJO){
-        computerLabPOJO.setCapacity(computerlabDAO.recentCapacity(computerLabPOJO.getId()));
+        computerLabPOJO.setCapacity(computerlabDAO.newestCapacity(computerLabPOJO.getId()));
+        computerlabDAO.save(computerLabPOJO);
+    }
+
+    /**
+     * 更新实验室可用机位数目
+     */
+    public  void updateRest(ComputerLabPOJO computerLabPOJO){
+        computerLabPOJO.setRest(computerlabDAO.newestRest(computerLabPOJO.getId()));
+        computerlabDAO.save(computerLabPOJO);
     }
     /**
      * 查询指定实验室地址
@@ -53,13 +63,6 @@ public class ComputerLabService {
      */
     public ComputerLabPOJO findAddressByLabId(int id) {
         return computerlabDAO.findComputerLabPOJOById(id);
-    }
-
-    /**
-     * 查询指定实验室容量
-     */
-    public ComputerLabPOJO findCapacityByLabId(int id){
-        return  computerlabDAO.findComputerLabPOJOById(id);
     }
 
 }

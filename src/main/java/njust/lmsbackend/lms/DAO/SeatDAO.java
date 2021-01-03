@@ -9,7 +9,5 @@ import java.util.List;
 
 @Repository
 public interface SeatDAO extends JpaRepository<SeatPOJO, Integer> {
-    SeatPOJO findSeatPOJOByLabId(int labId);
-
-    void deleteSeatPOJOByLabIdAndSeatId(int labId, int seatId);
+    List<SeatPOJO> findSeatPOJOByLabId(int labId);
 }
