@@ -40,7 +40,7 @@ public class SeatController {
      */
     @CrossOrigin
     @GetMapping("/api/seat/lab/avail")
-    public Result listAvailableSeatsByLabId(int labId){
+    public Result listAvailableSeatsByLabId(int labId) throws Exception{
         return ResultFactory.buildSuccessResult("查询指定实验室可用机位成功",seatService.listAbleSeats(labId));
     }
 
