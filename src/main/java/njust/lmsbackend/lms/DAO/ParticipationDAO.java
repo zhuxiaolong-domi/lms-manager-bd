@@ -27,6 +27,9 @@ public interface ParticipationDAO extends JpaRepository<ParticipationPOJO, Strin
 
     ParticipationPOJO findByStudentId(String studentId);
 
+    List<ParticipationPOJO> findParticipationPOJOSByStudentId(String studentId);
+    List<ParticipationPOJO> findAllByStudentId(String studentId);
+
     @Modifying
     @Transactional
     @Query(value = "update tb_participation set report=?1 where student_id=?2 AND exp_id=?3", nativeQuery = true)

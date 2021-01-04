@@ -34,10 +34,16 @@ public class AppointmentPOJO {
     @Transient
     String expName;
 
+    @Transient
+    String expId;
+
+    @Transient
+    String studentName;
+
     public AppointmentPOJO() {
     }
 
-    public AppointmentPOJO(String studentId, int labId, int seat_id, int time, String teacherName, String address, String expName) {
+    public AppointmentPOJO(String studentId, int labId, int seat_id, int time, String teacherName, String address, String expName, String expId, String studentName) {
         this.studentId = studentId;
         this.labId = labId;
         this.seat_id = seat_id;
@@ -45,6 +51,8 @@ public class AppointmentPOJO {
         this.teacherName = teacherName;
         this.address = address;
         this.expName = expName;
+        this.expId = expId;
+        this.studentName = studentName;
     }
 
     public String getAddress() {
@@ -101,5 +109,21 @@ public class AppointmentPOJO {
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public String getExpId() {
+        return expId;
+    }
+
+    public void setExpId(String expId) {
+        this.expId = expId;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 }

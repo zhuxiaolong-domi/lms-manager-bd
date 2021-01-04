@@ -18,10 +18,11 @@ public class LoginController {
     @CrossOrigin
     @PostMapping("/api/user/login")
     public Result Login(@RequestBody UserPOJO userPOJO) {
-        if (userService.findUserById(userPOJO.getId()) != null) {
-            String pwd = userService.findUserById(userPOJO.getId()).getPwd();
+        UserPOJO currentUser = userService.findUserById(userPOJO.getId());
+        if (currentUser != null) {
+            String pwd = currentUser.getPwd();
             if (pwd.equals(userPOJO.getPwd())) {
-                return ResultFactory.buildSuccessResult_p("学生登陆成功", userPOJO.getIdentity());
+                return ResultFactory.buildSuccessResult_p("学生登陆成功", currentUser);
             } else {
                 return ResultFactory.buildFailResult("登陆失败");
             }

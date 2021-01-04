@@ -35,12 +35,8 @@ public class FileController {
 
     @ResponseBody
     @PostMapping("/api/admin/uploadFile")
-    public Result uploadFile(@RequestParam("file") MultipartFile file, @RequestParam String studentId) {
+    public Result uploadFile(@RequestParam("file") MultipartFile file, @RequestParam String studentId, @RequestParam String expId) {
         String fileName = fileService.storeFile(file);
-
-        AppointmentPOJO appointmentPOJOList = userService.queryAppointmentById(studentId);
-        ParticipationPOJO participationPOJO = userService.findExpByStudentId(appointmentPOJOList.getStudentId());
-        String expId = participationPOJO.getExp_id();
 
         String fileDownloadUri = "E:\\report\\" + fileName;
         fileService.SaveParticipation(studentId, expId, fileDownloadUri);

@@ -17,6 +17,9 @@ public class ParticipationPOJO {
     private int score = 0;
     private String report;
 
+    @Transient
+    private String expName;
+
     public ParticipationPOJO() {
     }
 
@@ -33,6 +36,13 @@ public class ParticipationPOJO {
         this.studentId = studentId;
         this.expId = expId;
         this.report = report;
+    }
+
+    public ParticipationPOJO(String studentId, String expId, String report, String expName) {
+        this.studentId = studentId;
+        this.expId = expId;
+        this.report = report;
+        this.expName = expName;
     }
 
     public ParticipationPOJO(String studentId, String expId, int score, String report) {
@@ -72,5 +82,13 @@ public class ParticipationPOJO {
 
     public void setReport(String report) {
         this.report = report;
+    }
+
+    public String getExpName() {
+        return expName;
+    }
+
+    public void setExpName(String expName) {
+        this.expName = expName;
     }
 }

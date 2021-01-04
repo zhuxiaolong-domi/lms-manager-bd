@@ -50,7 +50,11 @@ public class ComputerLabPOJO {
         this.capacity = capacity;
     }
 
-    public void setRest(int rest){this.rest=rest;}
+    public void setRest(int rest) {
+        this.rest = rest;
+    }
 
-    public int getRest(){return rest;}
+    public int getRest() {
+        return rest;
+    }
 }
