@@ -128,15 +128,15 @@ public class UserService {
 
 
     /**
-    * @Description: 根据学生ID 查询所有的参与对象
-    * @Param:  studentId 学生ID
-    * @return:   ParticipationPOJO对象数组
-    * @Author: Liu ZhiTian
-    * @Date: 2021/1/3
-    */
-    public List<ParticipationPOJO> findParticipationPOJOSBySID(String studentId){
+     * @Description: 根据学生ID 查询所有的参与对象
+     * @Param: studentId 学生ID
+     * @return: ParticipationPOJO对象数组
+     * @Author: Liu ZhiTian
+     * @Date: 2021/1/3
+     */
+    public List<ParticipationPOJO> findParticipationPOJOSBySID(String studentId) {
         List<ParticipationPOJO> participationPOJOList = participationDAO.findAllByStudentId(studentId);
-        for(var participation : participationPOJOList){
+        for (var participation : participationPOJOList) {
             System.out.println(participation.getExp_id());
             participation.setExpName(experimentDAO.findByExpId(participation.getExp_id()).getName());
         }

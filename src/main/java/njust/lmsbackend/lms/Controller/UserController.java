@@ -99,6 +99,7 @@ public class UserController {
         return ResultFactory.buildSuccessResult_p("选择实验成功", null);
     }
 
+
     /**
      * 退选实验
      *
@@ -151,7 +152,7 @@ public class UserController {
     public Result queryAppointment(@RequestBody UserPOJO userPOJO) {
         List<AppointmentPOJO> appointmentPOJO = userService.queryAppointmentsById(userPOJO.getId());
         if (appointmentPOJO != null && appointmentPOJO.size() > 0) {
-            for(var appointment : appointmentPOJO){
+            for (var appointment : appointmentPOJO) {
                 ComputerLabPOJO computerLabPOJO = computerLabService.findAddressByLabId(appointment.getLabId());
                 appointment.setAddress(computerLabPOJO.getAddress());
 
@@ -183,4 +184,6 @@ public class UserController {
             return ResultFactory.buildFailResult("没有参与实验");
         }
     }
+
+
 }
