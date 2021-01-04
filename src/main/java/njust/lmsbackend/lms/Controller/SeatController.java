@@ -30,9 +30,18 @@ public class SeatController {
      * 列出指定实验室的机位信息
      */
     @CrossOrigin
-    @GetMapping("/api/seat/labId")
+    @GetMapping("/api/seat/lab")
     public Result listSeatsByLabId(int labId) throws Exception{
         return ResultFactory.buildSuccessResult("查询指定实验室机位成功",seatService.listSeats(labId));
+    }
+
+    /**
+     * 列出指定实验室的所有可用机位
+     */
+    @CrossOrigin
+    @GetMapping("/api/seat/lab/avail")
+    public Result listAvailableSeatsByLabId(int labId){
+        return ResultFactory.buildSuccessResult("查询指定实验室可用机位成功",seatService.listAbleSeats(labId));
     }
 
     /**

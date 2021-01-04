@@ -34,6 +34,13 @@ public class SeatService {
     }
 
     /**
+     * 根据实验室id返回所有可用的机位
+     */
+    public List<SeatPOJO> listAbleSeats(int labId){
+        return  seatDAO.findSeatPOJOByLabIdAndAndState(labId);
+    }
+
+    /**
      * 添加新机位并更新实验室容量
      * @param seatPOJO 机位对象
      */
