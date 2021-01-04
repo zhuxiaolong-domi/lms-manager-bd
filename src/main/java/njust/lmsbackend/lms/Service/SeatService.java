@@ -37,8 +37,8 @@ public class SeatService {
     /**
      * 根据实验室id返回所有可用的机位
      */
-    public List<SeatPOJO> listAbleSeats(int labId){
-        return  seatDAO.findSeatPOJOByLabIdAndAndState(labId);
+    public List<SeatPOJO> listAbleSeats(int labId) {
+        return seatDAO.findSeatPOJOByLabIdAndAndState(labId);
     }
 
     /**
@@ -73,5 +73,10 @@ public class SeatService {
             seatPOJO.setState(1);
         }
         seatDAO.save(seatPOJO);
+    }
+
+    public String listSeatState(int seatId, int labId) {
+        SeatPOJO seatPOJO = seatDAO.findBySeatIdAndLabId(seatId, labId);
+        return String.valueOf(seatPOJO.getState());
     }
 }

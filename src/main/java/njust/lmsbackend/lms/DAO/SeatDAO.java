@@ -11,6 +11,10 @@ import java.util.List;
 public interface SeatDAO extends JpaRepository<SeatPOJO, Integer> {
     List<SeatPOJO> findSeatPOJOByLabId(int labId);
 
-    @Query(value = "select * from tb_seat where lab_id=?1 and state =1",nativeQuery = true)
+    @Query(value = "select * from tb_seat where lab_id=?1 and state =1", nativeQuery = true)
     List<SeatPOJO> findSeatPOJOByLabIdAndAndState(int labId);
+
+    List<SeatPOJO> findAllBySeatIdAndLabId(int seatId, int labId);
+
+    SeatPOJO findBySeatIdAndLabId(int seatId, int labId);
 }

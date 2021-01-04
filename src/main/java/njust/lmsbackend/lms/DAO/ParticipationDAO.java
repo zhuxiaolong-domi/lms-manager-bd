@@ -28,7 +28,9 @@ public interface ParticipationDAO extends JpaRepository<ParticipationPOJO, Strin
     ParticipationPOJO findByStudentId(String studentId);
 
     List<ParticipationPOJO> findParticipationPOJOSByStudentId(String studentId);
+
     List<ParticipationPOJO> findAllByStudentId(String studentId);
+
 
     @Modifying
     @Transactional
